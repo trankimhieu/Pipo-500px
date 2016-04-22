@@ -33,6 +33,10 @@ android {
             buildConfigField "String", "CONSUMER_KEY", '"INSERT_YOUR_CONSUMER_KEY"'
         }
     }
+
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {

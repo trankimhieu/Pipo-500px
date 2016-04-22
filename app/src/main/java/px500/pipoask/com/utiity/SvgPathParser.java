@@ -28,7 +28,7 @@ public class SvgPathParser {
     private static final int TOKEN_EOF = 4;
 
     private int mCurrentToken;
-    private PointF mCurrentPoint = new PointF();
+    private final PointF mCurrentPoint = new PointF();
     private int mLength;
     private int mIndex;
     private String mPathString;

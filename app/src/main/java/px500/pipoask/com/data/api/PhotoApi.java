@@ -7,9 +7,6 @@ import retrofit.http.Path;
 import retrofit.http.Query;
 import rx.Observable;
 
-/**
- * Created by Sandy on 12/25/15.
- */
 public interface PhotoApi {
 
     @GET("/v1/photos?image_size=440&include_store=store_download&include_states=voted&consumer_key=rPv5iXqGa5QT5uQSNP8Y8Ja044qfUEN6pDCO2UFx")

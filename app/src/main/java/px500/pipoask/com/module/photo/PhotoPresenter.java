@@ -13,15 +13,12 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
-/**
- * Created by Sandy on 12/26/15.
- */
 public class PhotoPresenter extends BasePresenter<IPhotoView> {
 
     @Inject
     PhotoApi photoApi;
 
-    private Activity activity;
+    private final Activity activity;
 
     public PhotoPresenter(Activity activity) {
         this.activity = activity;

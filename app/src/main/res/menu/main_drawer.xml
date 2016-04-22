@@ -3,7 +3,7 @@
     <group android:checkableBehavior="single">
 
         <item
-            android:id="@+id/popuplar"
+            android:id="@+id/popular"
             android:title="@string/popular" />
 
         <item
@@ -11,8 +11,8 @@
             android:title="@string/editors" />
 
         <item
-            android:id="@+id/upcomming"
-            android:title="@string/upcomming" />
+            android:id="@+id/upcoming"
+            android:title="@string/upcoming" />
 
         <item
             android:id="@+id/fresh"

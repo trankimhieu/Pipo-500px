@@ -6,9 +6,6 @@ import px500.pipoask.com.di.component.ApplicationComponent;
 import px500.pipoask.com.di.component.DaggerApplicationComponent;
 import px500.pipoask.com.di.module.ApplicationModule;
 
-/**
- * Created by Sandy on 12/26/15.
- */
 public class GroovyApplication extends Application {
 
     private ApplicationComponent appComponent;

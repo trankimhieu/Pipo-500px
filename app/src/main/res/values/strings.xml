@@ -7,6 +7,12 @@
 
     <string name="popular">POPULAR</string>
     <string name="editors">EDITORS</string>
-    <string name="upcomming">UPCOMMING</string>
+    <string name="upcoming">UPCOMING</string>
     <string name="fresh">FRESH</string>
+    <string name="search">Search</string>
+    <string name="share">Share</string>
+    <string name="loading">Loading…</string>
+    <string name="copy_right">Copyright</string>
+    <string name="search_photo">Search photo…</string>
+    <string name="desc_search_image">Search result</string>
 </resources>

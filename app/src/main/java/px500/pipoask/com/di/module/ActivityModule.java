@@ -6,9 +6,6 @@ import dagger.Module;
 import dagger.Provides;
 import px500.pipoask.com.di.scope.PerActivity;
 
-/**
- * Created by Sandy on 12/31/15.
- */
 @Module
 public class ActivityModule {
     private final Activity activity;

@@ -9,10 +9,6 @@ import px500.pipoask.com.module.main.MainPresenter;
 import px500.pipoask.com.module.photo.PhotoPresenter;
 import px500.pipoask.com.module.search.SearchPresenter;
 
-/**
- * Created by Sandy on 12/31/15.
- */
-
 @Module
 public class PresenterModule {
 

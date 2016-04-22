@@ -8,9 +8,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import px500.pipoask.com.R;
 
-/**
- * Created by Sandy on 12/29/15.
- */
 public class SearchHolder extends MainHolder {
 
     @Bind(R.id.photo)

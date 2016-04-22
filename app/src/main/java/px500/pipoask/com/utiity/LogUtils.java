@@ -4,10 +4,6 @@ import android.util.Log;
 
 import px500.pipoask.com.BuildConfig;
 
-
-/**
- * Created by Sandy on 12/26/15.
- */
 public class LogUtils {
 
     private static final String TAG = "LogUtils";
@@ -19,7 +15,7 @@ public class LogUtils {
     private LogUtils() {
     }
 
-    public static void debug(final String tag, String message) {
+    public static void debug(@SuppressWarnings("SameParameterValue") final String tag, String message) {
         if (BuildConfig.DEBUG || Log.isLoggable(tag, Log.DEBUG)) {
             Log.d(tag, message);
         }
@@ -43,7 +39,7 @@ public class LogUtils {
         }
     }
 
-    public static void info(final String tag, String message) {
+    public static void info(@SuppressWarnings("SameParameterValue") final String tag, String message) {
         Log.i(tag, message);
     }
 
@@ -51,7 +47,7 @@ public class LogUtils {
         Log.i(tag, message, cause);
     }
 
-    public static void error(final String tag, String message) {
+    public static void error(@SuppressWarnings("SameParameterValue") final String tag, String message) {
         if (BuildConfig.DEBUG) {
             Log.e(tag, message, new Throwable());
         } else {

@@ -1,25 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
-    <FrameLayout
+    <px500.pipoask.com.widget.PhotoView
+        android:id="@+id/face_photo"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_face_image"
+        android:padding="10dp" />
 
-        <px500.pipoask.com.widget.PhotoView
-            android:padding="10dp"
-            android:background="@drawable/bg_face_image"
-            android:id="@+id/face_photo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+    <px500.pipoask.com.widget.PhotoView
+        android:id="@+id/photo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
-        <px500.pipoask.com.widget.PhotoView
-            android:id="@+id/photo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-    </FrameLayout>
-
-</LinearLayout>
+</FrameLayout>

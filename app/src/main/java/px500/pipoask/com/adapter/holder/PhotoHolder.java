@@ -5,7 +5,7 @@ import android.view.View;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import px500.pipoask.com.R;
-import uk.co.senab.photoview.PhotoView;
+import px500.pipoask.com.widget.PhotoView;
 
 /**
  * Created by Sandy on 12/27/15.

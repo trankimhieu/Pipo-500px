@@ -1,14 +1,14 @@
-package px500.pipoask.com;
+package px500.pipoask.com.module.main;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -25,8 +25,20 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import px500.pipoask.com.R;
+import px500.pipoask.com.adapter.PhotoAdapter;
+import px500.pipoask.com.adapter.holder.MainHolder;
+import px500.pipoask.com.data.api.Feature;
 import px500.pipoask.com.data.model.Photo;
+import px500.pipoask.com.data.model.PhotoList;
+import px500.pipoask.com.module.base.BaseActivity;
+import px500.pipoask.com.module.photo.PhotoActivity;
+import px500.pipoask.com.module.search.SearchActivity;
+import px500.pipoask.com.utiity.EndlessRecyclerOnScrollListener;
 
+/**
+ * Created by Sandy on 12/26/15.
+ */
 public class MainActivity extends BaseActivity implements IMainView,
         NavigationView.OnNavigationItemSelectedListener, MainHolder.ClickListener{
 

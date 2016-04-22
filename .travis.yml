@@ -10,7 +10,10 @@ android:
     matrix:
       - ANDROID_TARGET=android-23  ANDROID_ABI=armeabi-v7a
     global:
-      - ADB_INSTALL_TIMEOUT=8
+      # switch glibc to a memory conserving mode
+      - MALLOC_ARENA_MAX=2
+      # wait up to 10 minutes for adb to connect to emulator
+      - ADB_INSTALL_TIMEOUT=10
 
   before_install:
     - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI

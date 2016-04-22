@@ -9,41 +9,41 @@
     tools:openDrawer="start">
 
     <RelativeLayout
-        android:background="@android:color/black"
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@android:color/black"
+        android:orientation="vertical">
 
         <TextView
-            android:visibility="gone"
-            android:gravity="center"
-            android:textColor="@android:color/white"
             android:id="@+id/loadMoreView"
-            android:layout_alignParentBottom="true"
-            android:text="Loading..."
-            android:background="@color/colorPrimary"
             android:layout_width="match_parent"
-            android:layout_height="20dp" />
+            android:layout_height="20dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorPrimary"
+            android:gravity="center"
+            android:text="@string/loading"
+            android:textColor="@android:color/white"
+            android:visibility="gone" />
 
         <FrameLayout
-            android:layout_above="@id/loadMoreView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_above="@id/loadMoreView">
 
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
                 <include
                     android:id="@+id/toolbar"
                     layout="@layout/layout_toolbar" />
 
                 <android.support.v7.widget.RecyclerView
-                    android:clipToPadding="false"
                     android:id="@+id/recyclerView"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:clipToPadding="false" />
             </LinearLayout>
 
             <include

@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Pipo 500px</string>
+
+    <string name="empty_result">Empty result</string>
+    <string name="navigation_drawer_open">open</string>
+    <string name="navigation_drawer_close">close</string>
+
+    <string name="popular">POPULAR</string>
+    <string name="editors">EDITORS</string>
+    <string name="upcomming">UPCOMMING</string>
+    <string name="fresh">FRESH</string>
 </resources>

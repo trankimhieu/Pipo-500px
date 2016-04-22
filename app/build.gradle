@@ -59,4 +59,5 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.commit451:PhotoView:1.2.4'
     compile 'com.jakewharton.rxbinding:rxbinding:0.2.0'
+    compile 'com.github.500px:500px-android-sdk:-SNAPSHOT'
 }

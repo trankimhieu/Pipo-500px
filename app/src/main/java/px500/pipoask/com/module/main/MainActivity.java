@@ -141,7 +141,7 @@ public class MainActivity extends BaseActivity implements IMainView,
         resetAdapter();
 
         switch (item.getItemId()) {
-            case R.id.popuplar:
+            case R.id.popular:
                 feature = Feature.Type.POPULAR;
                 setTitle(getResources().getString(R.string.popular));
                 break;
@@ -151,9 +151,9 @@ public class MainActivity extends BaseActivity implements IMainView,
                 setTitle(getResources().getString(R.string.editors));
                 break;
 
-            case R.id.upcomming:
-                feature = Feature.Type.UPCOMMING;
-                setTitle(getResources().getString(R.string.upcomming));
+            case R.id.upcoming:
+                feature = Feature.Type.UPCOMING;
+                setTitle(getResources().getString(R.string.upcoming));
                 break;
 
             case R.id.fresh:

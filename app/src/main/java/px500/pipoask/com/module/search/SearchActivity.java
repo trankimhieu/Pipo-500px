@@ -37,9 +37,6 @@ import px500.pipoask.com.utiity.StringUtils;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 
-/**
- * Created by Sandy on 12/26/15.
- */
 public class SearchActivity extends BaseActivity implements ISearchView, MainHolder.ClickListener{
 
     public static final String TAG = "SearchActivity";
@@ -55,12 +52,10 @@ public class SearchActivity extends BaseActivity implements ISearchView, MainHol
 
     @Bind(R.id.recyclerView)
     RecyclerView recyclerView;
-
-    private List<Photo> photoList;
-    private SearchAdapter searchAdapter;
-
     @Inject
     SearchPresenter searchPresenter;
+    private List<Photo> photoList;
+    private SearchAdapter searchAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -86,7 +81,7 @@ public class SearchActivity extends BaseActivity implements ISearchView, MainHol
             }
         });
 
-        photoList = new ArrayList<Photo>();
+        photoList = new ArrayList<>();
         searchAdapter = new SearchAdapter(this, photoList, this);
 
         recyclerView.setHasFixedSize(true);

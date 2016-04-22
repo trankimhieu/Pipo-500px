@@ -25,7 +25,6 @@ import px500.pipoask.com.module.base.BaseActivity;
 import px500.pipoask.com.utiity.LogUtils;
 import px500.pipoask.com.utiity.StringUtils;
 import uk.co.senab.photoview.PhotoView;
-import uk.co.senab.photoview.PhotoViewAttacher;
 
 public class PhotoActivity extends BaseActivity implements IPhotoView{
 
@@ -129,7 +128,6 @@ public class PhotoActivity extends BaseActivity implements IPhotoView{
                 .load(photo.image_url)
                 .into(photoView);
 
-        PhotoViewAttacher mAttacher = new PhotoViewAttacher(photoView);
     }
 
     @Override

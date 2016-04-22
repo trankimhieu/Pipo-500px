@@ -10,9 +10,6 @@ import px500.pipoask.com.di.component.DaggerActivityComponent;
 import px500.pipoask.com.di.module.ActivityModule;
 import px500.pipoask.com.di.module.PresenterModule;
 
-/**
- * Created by Sandy on 12/25/15.
- */
 public class BaseActivity extends AppCompatActivity {
 
     private ActivityComponent mActivityComponent;

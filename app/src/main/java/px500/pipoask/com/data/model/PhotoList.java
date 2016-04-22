@@ -7,5 +7,5 @@ import java.util.List;
 
 public class PhotoList {
     @SerializedName("photos")
-    public List<Photo> photos = new ArrayList<>();
+    public final List<Photo> photos = new ArrayList<>();
 }

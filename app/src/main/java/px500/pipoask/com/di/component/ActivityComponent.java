@@ -8,9 +8,6 @@ import px500.pipoask.com.module.main.MainActivity;
 import px500.pipoask.com.module.photo.PhotoActivity;
 import px500.pipoask.com.module.search.SearchActivity;
 
-/**
- * Created by Sandy on 12/31/15.
- */
 @PerActivity
 @Component(
         dependencies = {

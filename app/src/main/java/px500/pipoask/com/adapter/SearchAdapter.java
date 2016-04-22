@@ -14,15 +14,12 @@ import px500.pipoask.com.adapter.holder.MainHolder;
 import px500.pipoask.com.adapter.holder.SearchHolder;
 import px500.pipoask.com.data.model.Photo;
 
-/**
- * Created by Sandy on 12/29/15.
- */
 public class SearchAdapter extends RecyclerView.Adapter<MainHolder> {
 
-    private Activity mActivity;
-    private List<Photo> photoList;
+    private final Activity mActivity;
+    private final List<Photo> photoList;
 
-    private MainHolder.ClickListener clickListener;
+    private final MainHolder.ClickListener clickListener;
 
     public SearchAdapter(Activity activity, List<Photo> photoList, MainHolder.ClickListener clickListener) {
         mActivity = activity;

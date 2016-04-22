@@ -10,7 +10,7 @@ public abstract class EndlessRecyclerOnScrollListener extends
     int firstVisibleItem, visibleItemCount, totalItemCount;
     private int previousTotal = 0;
     private boolean loading = true;
-    private GridLayoutManager mLinearLayoutManager;
+    private final GridLayoutManager mLinearLayoutManager;
 
     public EndlessRecyclerOnScrollListener(
             GridLayoutManager linearLayoutManager) {

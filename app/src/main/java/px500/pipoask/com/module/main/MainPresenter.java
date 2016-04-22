@@ -20,10 +20,7 @@ public class MainPresenter extends BasePresenter<IMainView> {
     @Inject
     PhotoApi photoApi;
 
-    private Activity activity;
-
     public MainPresenter(Activity activity) {
-        this.activity = activity;
         ((GroovyApplication) activity.getApplication()).getAppComponent().inject(this);
     }
 

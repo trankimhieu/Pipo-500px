@@ -36,9 +36,6 @@ import px500.pipoask.com.module.photo.PhotoActivity;
 import px500.pipoask.com.module.search.SearchActivity;
 import px500.pipoask.com.utiity.EndlessRecyclerOnScrollListener;
 
-/**
- * Created by Sandy on 12/26/15.
- */
 public class MainActivity extends BaseActivity implements IMainView,
         NavigationView.OnNavigationItemSelectedListener, MainHolder.ClickListener{
 
@@ -68,14 +65,13 @@ public class MainActivity extends BaseActivity implements IMainView,
 
     @Inject
     MainPresenter mainPresenter;
-
+    EndlessRecyclerOnScrollListener endlessRecyclerOnScrollListener;
     private GridLayoutManager gridLayoutManager;
     private List<Photo> photoList;
     private PhotoAdapter photoAdapter;
     private int currentPage = 1;
     private String feature = Feature.Type.POPULAR;
 
-    EndlessRecyclerOnScrollListener endlessRecyclerOnScrollListener;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,12 +108,12 @@ public class MainActivity extends BaseActivity implements IMainView,
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+        drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         navigationView.setNavigationItemSelectedListener(this);
 
-        photoList = new ArrayList<Photo>();
+        photoList = new ArrayList<>();
         photoAdapter = new PhotoAdapter(this, photoList, this);
         recyclerView.setAdapter(photoAdapter);
     }

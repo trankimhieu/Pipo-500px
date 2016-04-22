@@ -1,23 +1,15 @@
 package px500.pipoask.com.utiity;
 
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-
-/**
- * Created by Sandy on 12/27/15.
- */
 
 public abstract class EndlessRecyclerOnScrollListener extends
         RecyclerView.OnScrollListener {
     public static String TAG = EndlessRecyclerOnScrollListener.class
             .getSimpleName();
-
+    int firstVisibleItem, visibleItemCount, totalItemCount;
     private int previousTotal = 0;
     private boolean loading = true;
-    private int visibleThreshold = 5;
-    int firstVisibleItem, visibleItemCount, totalItemCount;
-
     private GridLayoutManager mLinearLayoutManager;
 
     public EndlessRecyclerOnScrollListener(
@@ -43,6 +35,7 @@ public abstract class EndlessRecyclerOnScrollListener extends
                 previousTotal = totalItemCount;
             }
         }
+        int visibleThreshold = 5;
         if (!loading
                 && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
             // End has been reached

@@ -12,18 +12,12 @@ import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-/**
- * Created by Sandy on 12/26/15.
- */
 public class SearchPresenter extends BasePresenter<ISearchView> {
 
     @Inject
     PhotoApi photoApi;
 
-    private Activity activity;
-
     public SearchPresenter(Activity activity) {
-        this.activity = activity;
         ((GroovyApplication) activity.getApplication()).getAppComponent().inject(this);
     }
 

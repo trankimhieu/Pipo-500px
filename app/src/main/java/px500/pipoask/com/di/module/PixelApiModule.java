@@ -43,8 +43,7 @@ public class PixelApiModule {
                     String protocolPrefix = request.isHttps() ? "S" : "";
                     Log.i("OkHttpClient", String.format("---> HTTP%s %s %s",
                             protocolPrefix, request.method(), request.urlString()));
-                    Response response = chain.proceed(request);
-                    return response;
+                    return chain.proceed(request);
                 }
             });
         }

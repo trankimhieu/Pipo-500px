@@ -4,7 +4,6 @@ import android.app.Activity;
 
 import javax.inject.Inject;
 
-import px500.pipoask.com.BuildConfig;
 import px500.pipoask.com.GroovyApplication;
 import px500.pipoask.com.data.api.PhotoApi;
 import px500.pipoask.com.data.local.SharedPreferenceConfig;
@@ -17,9 +16,6 @@ import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-/**
- * Created by Sandy on 12/26/15.
- */
 //public class MainPresenter extends BasePresenter<IMainView> implements XAuth500pxTask.Delegate {
 public class MainPresenter extends BasePresenter<IMainView> {
     private static final String TAG = "MainPresenter";
@@ -85,10 +81,8 @@ public class MainPresenter extends BasePresenter<IMainView> {
         String token = SharedPreferenceHelper.getSharedPreferenceString(activity, SharedPreferenceConfig.TOKEN, "");
         String tokenSecret = SharedPreferenceHelper.getSharedPreferenceString(activity, SharedPreferenceConfig.TOKEN_SECRET, "");
 
-        if (StringUtils.isEmpty(token) || StringUtils.isEmpty(tokenSecret))
-            return true;
+        return StringUtils.isEmpty(token) || StringUtils.isEmpty(tokenSecret);
 
-        return false;
     }
 
 //    @Override

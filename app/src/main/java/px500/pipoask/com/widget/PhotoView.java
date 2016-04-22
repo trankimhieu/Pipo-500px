@@ -4,9 +4,6 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
-/**
- * Created by Sandy on 12/27/15.
- */
 public class PhotoView extends ImageView {
 
     public PhotoView(Context context) {
@@ -25,8 +22,7 @@ public class PhotoView extends ImageView {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
-        int desiredWidth= getContext().getResources().getDisplayMetrics().widthPixels/2;
-        int desiredHeight = desiredWidth;
+        int desiredWidth = getContext().getResources().getDisplayMetrics().widthPixels / 2;
 
         int widthMode = MeasureSpec.getMode(widthMeasureSpec);
         int widthSize = MeasureSpec.getSize(widthMeasureSpec);
@@ -48,9 +44,9 @@ public class PhotoView extends ImageView {
         if (heightMode == MeasureSpec.EXACTLY) {
             height = heightSize;
         } else if (heightMode == MeasureSpec.AT_MOST) {
-            height = Math.min(desiredHeight, heightSize);
+            height = Math.min(desiredWidth, heightSize);
         } else {
-            height = desiredHeight;
+            height = desiredWidth;
         }
 
         setMeasuredDimension(width, height);

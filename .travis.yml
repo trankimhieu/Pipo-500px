@@ -32,7 +32,7 @@ script:
 notifications:
   slack:
     rooms:
-      - azever:pyw9gfsNDp8PNUJCHv5qWOtG#pipo-500px
+      - azever:pyw9gfsNDp8PNUJCHv5qWOtG
     on_success: always
     on_failure: always
     on_start: always

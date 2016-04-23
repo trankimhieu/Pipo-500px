@@ -3,9 +3,9 @@ package px500.pipoask.com.data.api;
 import px500.pipoask.com.data.model.PhotoDetail;
 import px500.pipoask.com.data.model.PhotoList;
 import px500.pipoask.com.data.model.VoteList;
-import retrofit.http.GET;
-import retrofit.http.Path;
-import retrofit.http.Query;
+import retrofit2.http.GET;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 import rx.Observable;
 
 public interface PhotoApi {
@@ -19,6 +19,6 @@ public interface PhotoApi {
     @GET("/v1/photos/search")
     Observable<PhotoList> search(@Query("term") String keyword);
 
-    @GET("/v1/photos/150569481/votes")
-    Observable<VoteList> getVoteList();
+    @GET("/v1/photos/{id}/votes")
+    Observable<VoteList> getVoteList(@Path("id") String id);
 }

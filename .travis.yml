@@ -1,24 +1,32 @@
 language: android
 jdk:
   - oraclejdk8
+
+env:
+  matrix:
+    - ANDROID_TARGET=android-23  ANDROID_ABI=armeabi-v7a
+  global: # install timeout in minutes (2 minutes by default)
+    # switch glibc to a memory conserving mode
+    - MALLOC_ARENA_MAX=2
+    # wait up to 10 minutes for adb to connect to emulator
+    - ADB_INSTALL_TIMEOUT=10
+
 android:
   components:
   - platform-tools
   - tools
   - extra
   - sys-img-armeabi-v7a-android-23
-  env:
-    matrix:
-    - ANDROID_TARGET=android-23  ANDROID_ABI=armeabi-v7a
-    global:
-    - MALLOC_ARENA_MAX=2
-    - ADB_INSTALL_TIMEOUT=10
-  before_install: 
-  before_script: 
-  script:
-  - "./gradlew test"
-  notifications:
-    slack:
+
+# Emulator Management: Create, Start and Wait
+before_script:
+  - echo no | android create avd --force -n test -t android-21 --abi armeabi-v7a
+  - emulator -avd test -no-skin -no-audio -no-window &
+  - android-wait-for-emulator
+  - adb shell input keyevent 82 &
+
+script:
+- "./gradlew connectedAndroidTest"
 
 
 notifications:

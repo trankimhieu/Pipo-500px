@@ -1,28 +1,27 @@
 language: android
 android:
   components:
-    - platform-tools
-    - tools
-    - extra
-    - sys-img-armeabi-v7a-android-23
-
+  - platform-tools
+  - tools
+  - extra
+  - sys-img-armeabi-v7a-android-23
   env:
     matrix:
-      - ANDROID_TARGET=android-23  ANDROID_ABI=armeabi-v7a
+    - ANDROID_TARGET=android-23  ANDROID_ABI=armeabi-v7a
     global:
-      # switch glibc to a memory conserving mode
-      - MALLOC_ARENA_MAX=2
-      # wait up to 10 minutes for adb to connect to emulator
-      - ADB_INSTALL_TIMEOUT=10
-
-  before_install:
-#    - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI
-#    - emulator -avd test -no-skin -no-audio -no-window &
-
-  before_script:
-#    - android-wait-for-emulator
-#    - adb shell input keyevent 82 &
-
+    - MALLOC_ARENA_MAX=2
+    - ADB_INSTALL_TIMEOUT=10
+  before_install: 
+  before_script: 
   script:
-#    - android list target
-    - ./gradlew test
+  - "./gradlew test"
+  notifications:
+    slack:
+      rooms:
+      - azever:pyw9gfsNDp8PNUJCHv5qWOtG#pipo-500px
+      on_success: always
+      on_failure: always
+      on_start: always
+notifications:
+  slack:
+    secure: cT8TkMg7gu0eTAJI0fHFGiAlrQxRNLkamqVi9I9qcNaBJ/PRt6I1VV9q7Q8FcidbYMHb3u906SjlU/DHtHBBc0lLuJpPLctahpiakRvZp9tDkTtlXLLuANvNHxURyBMUokPJNgvBVNa07qqapql6spdSmHWv8eG3ruhhTXy3w3sayEpkooa0oxeNuMnmwoV7MPFwG/LJsmWxV9SAGJQU4MkuSW1rYOqLrtm7zXz63nJaGyZGzVNE2qHQ7t7tMJ9lnhJxahUcYoUH7d2/+eP9aS1xBy4efWRrgN9SZDlEsRoFuFjliZdYqbZN5aGRZ8cDyYWQtvH7cX0RY7Jb9v0dvjXpgldKuOqhgtMAdX0VhTLC0BNQB1nYD9HzW1COkDEiyD7yRCBEmrmoVkxst2X2GgLDwQHQ8GgnMQt7u3pZo+OEYj2KpovkBDVRz/z23ZHIezV6mgZyWfOgwwD4txFxfjk6hkQNIottlDJwLliogUR2f2MfWdeMpOFXBWJyXNU+DWd78isdI4Dy5vOS89c0K4BrUUpFJjBiGFGXDpVZaGvzPIWAH4fywcG9Jb2AGIEQr55wtmJQCJrogECnxM5G03tVV2YxA2Uul198Zb7iObkC2ycYCXYFlRV5aH7IDO33ei6JDdzvRt8LAhfPtBppJ7iZRtXPysbh/fvzAOzt75c=

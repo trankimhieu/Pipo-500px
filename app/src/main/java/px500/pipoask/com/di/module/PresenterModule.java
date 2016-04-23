@@ -5,6 +5,7 @@ import android.app.Activity;
 import dagger.Module;
 import dagger.Provides;
 import px500.pipoask.com.di.scope.PerActivity;
+import px500.pipoask.com.module.login.LoginPresenter;
 import px500.pipoask.com.module.main.MainPresenter;
 import px500.pipoask.com.module.photo.PhotoPresenter;
 import px500.pipoask.com.module.search.SearchPresenter;
@@ -16,6 +17,12 @@ public class PresenterModule {
     @PerActivity
     MainPresenter providesMainPresenter(Activity activity) {
         return new MainPresenter(activity);
+    }
+
+    @Provides
+    @PerActivity
+    LoginPresenter providesLoginPresenter(Activity activity) {
+        return new LoginPresenter(activity);
     }
 
     @Provides

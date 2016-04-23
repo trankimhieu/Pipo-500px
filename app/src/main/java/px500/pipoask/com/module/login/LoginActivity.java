@@ -2,30 +2,26 @@ package px500.pipoask.com.module.login;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.fivehundredpx.api.FiveHundredException;
-import com.fivehundredpx.api.auth.AccessToken;
-import com.fivehundredpx.api.tasks.XAuth500pxTask;
+import com.afollestad.materialdialogs.MaterialDialog;
+
+import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import px500.pipoask.com.BuildConfig;
 import px500.pipoask.com.R;
-import px500.pipoask.com.utiity.LogUtils;
+import px500.pipoask.com.module.base.BaseActivity;
 
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends AppCompatActivity implements XAuth500pxTask.Delegate {
+public class LoginActivity extends BaseActivity implements ILoginView {
 
 
     private static final String TAG = "LoginActivity";
@@ -36,45 +32,63 @@ public class LoginActivity extends AppCompatActivity implements XAuth500pxTask.D
     TextView mPasswordView;
     @Bind(R.id.email_sign_in_button)
     Button mEmailSignInButton;
+    @Inject
+    LoginPresenter mLoginPresenter;
     // UI references.
     private ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getActivityComponent().inject(this);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+        mLoginPresenter.attachView(this);
         // Set up the login form.
-        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == R.id.login || id == EditorInfo.IME_NULL) {
-                    attemptLogin();
-                    return true;
-                }
-                return false;
+        mPasswordView.setOnEditorActionListener((textView, id, keyEvent) -> {
+            if (id == R.id.login || id == EditorInfo.IME_NULL) {
+                login();
+                return true;
             }
+            return false;
         });
 
-        mEmailSignInButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                attemptLogin();
-            }
-        });
+        mEmailSignInButton.setOnClickListener(view -> login());
         mProgressDialog = new ProgressDialog(this);
         mProgressDialog.setMessage(getString(R.string.login));
 
     }
 
+    private boolean isPasswordValid(String password) {
+        return password.length() > 6;
+    }
 
-    /**
-     * Attempts to sign in or register the account specified by the login form.
-     * If there are form errors (invalid email, missing fields, etc.), the
-     * errors are presented and no actual login attempt is made.
-     */
-    private void attemptLogin() {
 
+    @Override
+    public void showLoadingData() {
+        mProgressDialog.show();
+    }
+
+    @Override
+    public void hideLoadingData() {
+        mProgressDialog.dismiss();
+    }
+
+    @Override
+    public void showError(String e) {
+        runOnUiThread(() -> {
+            // TODO: Build dialog manager
+            new MaterialDialog.Builder(LoginActivity.this)
+                    .title(getString(R.string.error_login_title))
+                    .content(getString(R.string.error_login_content))
+                    .positiveText(getString(R.string.dialog_button_ok)).onPositive((dialog, which) -> dialog.dismiss())
+                    .show();
+        });
+    }
+
+    @Override
+    public void login() {
+        showLoadingData();
         // Reset errors.
         mEmailView.setError(null);
         mPasswordView.setError(null);
@@ -107,34 +121,11 @@ public class LoginActivity extends AppCompatActivity implements XAuth500pxTask.D
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-            showProgress(true);
-            XAuth500pxTask loginTask = new XAuth500pxTask(this);
+
             email = mEmailView.getText().toString();
             password = mPasswordView.getText().toString();
-            loginTask.execute(BuildConfig.CONSUMER_KEY, BuildConfig.CONSUMER_KEY_SECRET, email, password);
+            mLoginPresenter.login(email, password);
         }
-    }
-
-    private boolean isPasswordValid(String password) {
-        //TODO: Replace this with your own logic
-        return password.length() > 4;
-    }
-
-
-    private void showProgress(final boolean show) {
-        mProgressDialog.show();
-    }
-
-    @Override
-    public void onSuccess(AccessToken accessToken) {
-        LogUtils.debug(TAG, accessToken.getToken());
-        mProgressDialog.dismiss();
-    }
-
-    @Override
-    public void onFail(FiveHundredException e) {
-        LogUtils.error(TAG, e.getMessage());
-        mProgressDialog.dismiss();
     }
 }
 

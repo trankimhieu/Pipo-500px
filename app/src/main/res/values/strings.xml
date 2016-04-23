@@ -33,4 +33,9 @@
     <string name="demo_username">trankimhieu</string>
     <string name="demo_password">19001570</string>
     <string name="logo_500px">500px Logo</string>
+
+
+    <string name="error_login_title" type="id">Login Error</string>
+    <string name="error_login_content" type="id">Wrong email or password, please check it again</string>
+    <string name="dialog_button_ok" type="id">OK</string>
 </resources>

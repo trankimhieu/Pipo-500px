@@ -7,21 +7,37 @@ import com.google.gson.annotations.SerializedName;
 
 public class Photo implements Parcelable {
 
+    public static final Creator<Photo> CREATOR = new Creator<Photo>() {
+        public Photo createFromParcel(Parcel source) {
+            return new Photo(source);
+        }
+
+        public Photo[] newArray(int size) {
+            return new Photo[size];
+        }
+    };
     @SerializedName("image_url")
     public String image_url;
-
     @SerializedName("name")
     public String name;
-
     @SerializedName("url")
     public String url;
-
     @SerializedName("id")
     public String id;
-
     @SerializedName("description")
     public String description;
+    public VoteList voteList;
 
+    public Photo() {
+    }
+
+    private Photo(Parcel in) {
+        this.image_url = in.readString();
+        this.name = in.readString();
+        this.url = in.readString();
+        this.id = in.readString();
+        this.description = in.readString();
+    }
 
     @Override
     public int describeContents() {
@@ -36,25 +52,4 @@ public class Photo implements Parcelable {
         dest.writeString(this.id);
         dest.writeString(this.description);
     }
-
-    public Photo() {
-    }
-
-    private Photo(Parcel in) {
-        this.image_url = in.readString();
-        this.name = in.readString();
-        this.url = in.readString();
-        this.id = in.readString();
-        this.description = in.readString();
-    }
-
-    public static final Creator<Photo> CREATOR = new Creator<Photo>() {
-        public Photo createFromParcel(Parcel source) {
-            return new Photo(source);
-        }
-
-        public Photo[] newArray(int size) {
-            return new Photo[size];
-        }
-    };
 }

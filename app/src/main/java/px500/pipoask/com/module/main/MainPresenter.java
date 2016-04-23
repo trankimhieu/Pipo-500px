@@ -6,9 +6,12 @@ import javax.inject.Inject;
 
 import px500.pipoask.com.GroovyApplication;
 import px500.pipoask.com.data.api.PhotoApi;
+import px500.pipoask.com.data.model.Photo;
 import px500.pipoask.com.data.model.PhotoList;
+import px500.pipoask.com.data.model.VoteList;
 import px500.pipoask.com.module.base.BasePresenter;
 import px500.pipoask.com.utiity.LogUtils;
+import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -58,6 +61,30 @@ public class MainPresenter extends BasePresenter<IMainView> {
 
                     @Override
                     public void onNext(PhotoList photoList) {
+                        Observable<Photo> photoObserver = Observable.from(photoList.photos);
+                        photoObserver.forEach(photo -> {
+                            LogUtils.debug(TAG, photo.image_url);
+                            photoApi.getVoteList()
+                                    .subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe(new Subscriber<VoteList>() {
+                                        @Override
+                                        public void onCompleted() {
+
+                                        }
+
+                                        @Override
+                                        public void onError(Throwable e) {
+
+                                        }
+
+                                        @Override
+                                        public void onNext(VoteList voteList) {
+                                            photo.voteList = voteList;
+                                        }
+                                    });
+                        });
+
                         getMvpView().showPhotoList(photoList);
                     }
                 });

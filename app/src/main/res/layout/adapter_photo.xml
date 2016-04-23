@@ -16,4 +16,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="5dp"
+        android:background="@drawable/icon_vote1"
+        android:contentDescription="@string/content_des_vote_button" />
+
 </FrameLayout>

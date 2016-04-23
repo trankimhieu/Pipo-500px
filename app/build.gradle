@@ -1,5 +1,6 @@
 apply plugin: 'android-sdk-manager'
 apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.neenbedankt.android-apt'
 
 android {
@@ -17,10 +18,8 @@ android {
 
         debug {
             buildConfigField "String", "ENDPOINT", '"https://api.500px.com"'
-            buildConfigField "String", "USERNAME", '"INSERT_YOUR_500px_USERNAME"'
-            buildConfigField "String", "PASSWORD", '"INSERT_YOUR_PASSWORD"'
-            buildConfigField "String", "CONSUMER_KEY_SECRET", '"INSERT_YOUR_CONSUMER_KEY_SECRET"'
-            buildConfigField "String", "CONSUMER_KEY", '"INSERT_YOUR_CONSUMER_KEY"'
+            buildConfigField "String", "CONSUMER_KEY_SECRET", '"g1FIiNqo2Si8tEwNrqPJZMJFuF0xU7IwP7gqQ3ep"'
+            buildConfigField "String", "CONSUMER_KEY", '"6ChBZTzYgNc3DBlLWzlWhbyVBrSWdxrvuyXJBsGl"'
         }
 
         release {
@@ -28,15 +27,18 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField "String", "ENDPOINT", '"https://api.500px.com"'
-            buildConfigField "String", "USERNAME", '"INSERT_YOUR_500px_USERNAME"'
-            buildConfigField "String", "PASSWORD", '"INSERT_YOUR_PASSWORD"'
-            buildConfigField "String", "CONSUMER_KEY_SECRET", '"INSERT_YOUR_CONSUMER_KEY_SECRET"'
-            buildConfigField "String", "CONSUMER_KEY", '"INSERT_YOUR_CONSUMER_KEY"'
+            buildConfigField "String", "CONSUMER_KEY_SECRET", '"g1FIiNqo2Si8tEwNrqPJZMJFuF0xU7IwP7gqQ3ep"'
+            buildConfigField "String", "CONSUMER_KEY", '"6ChBZTzYgNc3DBlLWzlWhbyVBrSWdxrvuyXJBsGl"'
         }
     }
 
     lintOptions {
         abortOnError false
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
@@ -59,4 +61,5 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.commit451:PhotoView:1.2.4'
     compile 'com.jakewharton.rxbinding:rxbinding:0.2.0'
+    compile 'com.github.500px:500px-android-sdk:-SNAPSHOT'
 }

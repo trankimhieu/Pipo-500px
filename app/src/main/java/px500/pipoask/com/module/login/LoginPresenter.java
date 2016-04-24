@@ -45,7 +45,7 @@ public class LoginPresenter extends BasePresenter<ILoginView> implements XAuth50
         getMvpView().hideLoadingData();
         LogUtils.debug(TAG, accessToken.getToken());
         SharedPreferenceHelper.setSharedPreferenceString(ConstKV.USER_500PX_TOKEN, accessToken.getToken());
-        SharedPreferenceHelper.setSharedPreferenceString(ConstKV.USER_500PX_TOKEN_SECRET, accessToken.getToken());
+        SharedPreferenceHelper.setSharedPreferenceString(ConstKV.USER_500PX_TOKEN_SECRET, accessToken.getTokenSecret());
         new NavigationManager<MainActivity>().openActivity((Context) getMvpView(), MainActivity.class);
     }
 
@@ -53,5 +53,16 @@ public class LoginPresenter extends BasePresenter<ILoginView> implements XAuth50
     public void onFail(FiveHundredException e) {
         getMvpView().hideLoadingData();
         getMvpView().showError(e.getMessage());
+    }
+
+    public void checkToken() {
+        String token = SharedPreferenceHelper.getSharedPreferenceString(ConstKV.USER_500PX_TOKEN, null);
+
+        if (token != null) {
+            String token_secret = SharedPreferenceHelper.getSharedPreferenceString(ConstKV.USER_500PX_TOKEN_SECRET, null);
+            LogUtils.debug(TAG + " Token", token);
+            LogUtils.debug(TAG + " Token Secret", token_secret);
+            new NavigationManager<MainActivity>().openActivity((Context) getMvpView(), MainActivity.class);
+        }
     }
 }

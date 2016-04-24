@@ -3,6 +3,7 @@ package px500.pipoask.com.module.photo;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -15,6 +16,8 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import org.parceler.Parcels;
+
 import javax.inject.Inject;
 
 import butterknife.Bind;
@@ -26,7 +29,7 @@ import px500.pipoask.com.utiity.LogUtils;
 import px500.pipoask.com.utiity.StringUtils;
 import uk.co.senab.photoview.PhotoView;
 
-public class PhotoActivity extends BaseActivity implements IPhotoView{
+public class PhotoActivity extends BaseActivity implements IPhotoView {
 
     public static final String TAG = "PhotoActivity";
     public static final String PHOTO_ID = "photo_id";
@@ -66,7 +69,9 @@ public class PhotoActivity extends BaseActivity implements IPhotoView{
 
         initUI();
 
-        photo = getIntent().getParcelableExtra(PHOTO_ID);
+
+        Parcelable parcelable = getIntent().getParcelableExtra(PHOTO_ID);
+        photo = Parcels.unwrap(parcelable);
         setTitle(photo.name);
 
         photoPresenter.getPhotoById(photo.id);
@@ -76,22 +81,14 @@ public class PhotoActivity extends BaseActivity implements IPhotoView{
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> finish());
 
-        copyright.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://500px.com" + photo.url));
-                    startActivity(browserIntent);
-                } catch (Exception exp) {
-                    LogUtils.error(TAG, exp.getMessage());
-                }
+        copyright.setOnClickListener(v -> {
+            try {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://500px.com" + photo.url));
+                startActivity(browserIntent);
+            } catch (Exception exp) {
+                LogUtils.error(TAG, exp.getMessage());
             }
         });
     }
@@ -125,7 +122,7 @@ public class PhotoActivity extends BaseActivity implements IPhotoView{
     public void imageLoaded(Photo photo) {
         llLoading.setVisibility(View.GONE);
         Picasso.with(this)
-                .load(photo.image_url)
+                .load(photo.imageUrl)
                 .into(photoView);
 
     }

@@ -44,6 +44,7 @@ public class LoginActivity extends BaseActivity implements ILoginView {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         mLoginPresenter.attachView(this);
+        mLoginPresenter.checkToken();
         // Set up the login form.
         mPasswordView.setOnEditorActionListener((textView, id, keyEvent) -> {
             if (id == R.id.login || id == EditorInfo.IME_NULL) {

@@ -1,8 +1,6 @@
 package px500.pipoask.com.module.base;
 
 import android.annotation.SuppressLint;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import px500.pipoask.com.GroovyApplication;

@@ -1,22 +1,33 @@
 package px500.pipoask.com.data.api;
 
-import px500.pipoask.com.BuildConfig;
+import px500.pipoask.com.data.model.Photo;
 import px500.pipoask.com.data.model.PhotoDetail;
 import px500.pipoask.com.data.model.PhotoList;
-import retrofit.http.GET;
-import retrofit.http.Path;
-import retrofit.http.Query;
+import px500.pipoask.com.data.model.VoteList;
+import retrofit2.http.DELETE;
+import retrofit2.http.GET;
+import retrofit2.http.POST;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 import rx.Observable;
 
 public interface PhotoApi {
 
-    @GET("/v1/photos?image_size=440&include_store=store_download&include_states=voted&consumer_key=" + BuildConfig.CONSUMER_KEY)
+    @GET("/v1/photos?image_size=440&include_store=store_download&include_states=voted")
     Observable<PhotoList> getFeaturePhotos(@Query("page") int page, @Query("feature") String feature);
 
-    @GET("/v1/photos/{id}?image_size=1080&consumer_key=" + BuildConfig.CONSUMER_KEY)
-    Observable<PhotoDetail> getPhotoById(@Path("id") String id);
+    @GET("/v1/photos/{id}?image_size=1080")
+    Observable<PhotoDetail> getPhotoById(@Path("id") Integer id);
 
-    @GET("/v1/photos/search?consumer_key=" + BuildConfig.CONSUMER_KEY)
+    @GET("/v1/photos/search")
     Observable<PhotoList> search(@Query("term") String keyword);
 
+    @GET("/v1/photos/{id}/votes")
+    Observable<VoteList> getVoteList(@Path("id") String id);
+
+    @POST("/v1/photos/{id}/vote")
+    Observable<Photo> postVote(@Path("id") Integer id, @Query("vote") int vote);
+
+    @DELETE("/v1/photos/{id}/vote")
+    Observable<Photo> deleteVote(@Path("id") Integer id);
 }

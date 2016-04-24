@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 
 import com.squareup.picasso.Picasso;
 
@@ -22,6 +23,7 @@ import px500.pipoask.com.R;
 import px500.pipoask.com.adapter.holder.MainHolder;
 import px500.pipoask.com.data.api.PhotoApi;
 import px500.pipoask.com.data.model.Photo;
+import px500.pipoask.com.utiity.LogUtils;
 import px500.pipoask.com.widget.PhotoView;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -96,6 +98,9 @@ public class PhotoAdapter extends RecyclerView.Adapter<MainHolder> {
         @Bind(R.id.image_button_vote)
         public ImageButton imageButtonVote;
 
+        @Bind(R.id.progress_bar_vote)
+        ProgressBar progressBarVote;
+
         public PhotoHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
@@ -103,9 +108,14 @@ public class PhotoAdapter extends RecyclerView.Adapter<MainHolder> {
 
         @OnClick(R.id.image_button_vote)
         void onClickImageButtonVote(View view) {
+
+            imageButtonVote.setVisibility(View.GONE);
+            progressBarVote.setVisibility(View.VISIBLE);
+
+
             Photo photo = (Photo) view.getTag();
             if (photo.voted) {
-                photoApi.postVote(photo.id, 0).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Subscriber<Photo>() {
+                photoApi.deleteVote(photo.id).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Subscriber<Photo>() {
                     @Override
                     public void onCompleted() {
 
@@ -113,12 +123,14 @@ public class PhotoAdapter extends RecyclerView.Adapter<MainHolder> {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        LogUtils.error(TAG, e.getMessage());
                     }
 
                     @Override
                     public void onNext(Photo photo) {
                         imageButtonVote.setBackground(ContextCompat.getDrawable(mActivity, R.drawable.icon_vote0));
+                        imageButtonVote.setVisibility(View.VISIBLE);
+                        progressBarVote.setVisibility(View.GONE);
                     }
                 });
             } else {
@@ -130,12 +142,14 @@ public class PhotoAdapter extends RecyclerView.Adapter<MainHolder> {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        LogUtils.error(TAG, e.getMessage());
                     }
 
                     @Override
                     public void onNext(Photo photo) {
                         imageButtonVote.setBackground(ContextCompat.getDrawable(mActivity, R.drawable.icon_vote1));
+                        imageButtonVote.setVisibility(View.VISIBLE);
+                        progressBarVote.setVisibility(View.GONE);
                     }
                 });
             }

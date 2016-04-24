@@ -4,6 +4,7 @@ import px500.pipoask.com.data.model.Photo;
 import px500.pipoask.com.data.model.PhotoDetail;
 import px500.pipoask.com.data.model.PhotoList;
 import px500.pipoask.com.data.model.VoteList;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -24,7 +25,9 @@ public interface PhotoApi {
     @GET("/v1/photos/{id}/votes")
     Observable<VoteList> getVoteList(@Path("id") String id);
 
-    //    https://api.500px.com/v1/photos/{id}/vote?vote=1
     @POST("/v1/photos/{id}/vote")
     Observable<Photo> postVote(@Path("id") Integer id, @Query("vote") int vote);
+
+    @DELETE("/v1/photos/{id}/vote")
+    Observable<Photo> deleteVote(@Path("id") Integer id);
 }

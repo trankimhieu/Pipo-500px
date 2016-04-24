@@ -3,6 +3,7 @@ package px500.pipoask.com.module.upload;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Display;
@@ -72,7 +73,6 @@ public class UploadActivity extends AppCompatActivity {
         if (bundle != null) {
             mUri = bundle.getParcelable(ConstKV.BUNDLE_IMAGE_URI);
             if (mUri != null) {
-
                 imageViewPhoto.setImageURI(mUri);
                 LogUtils.debug(TAG, mUri.toString());
             }
@@ -81,6 +81,29 @@ public class UploadActivity extends AppCompatActivity {
         CategorySpinnerAdapter adapter = new CategorySpinnerAdapter(this, 0, ConstKV.CATEGORY_LIST);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCategory.setAdapter(adapter);
+
+        flyLayout.setOnPullRefreshListener(new FlyRefreshLayout.OnPullRefreshListener() {
+            @Override
+            public void onRefresh(FlyRefreshLayout view) {
+                LogUtils.debug(TAG, "Refresh");
+                new Handler().postDelayed(() -> flyLayout.onRefreshFinish(), 2000);
+            }
+
+            @Override
+            public void onRefreshAnimationEnd(FlyRefreshLayout view) {
+
+            }
+        });
+
+        View actionButton = flyLayout.getHeaderActionButton();
+        if (actionButton != null) {
+            actionButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    flyLayout.startRefresh();
+                }
+            });
+        }
     }
 
     @Override

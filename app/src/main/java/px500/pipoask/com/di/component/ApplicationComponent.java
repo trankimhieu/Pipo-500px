@@ -23,6 +23,5 @@ public interface ApplicationComponent  {
     void inject(PhotoPresenter photoPresenter);
     void inject(SearchPresenter searchPresenter);
     void inject(LoginPresenter loginPresenter);
-
     void inject(PhotoAdapter photoAdapter);
 }

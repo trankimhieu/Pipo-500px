@@ -36,14 +36,9 @@ public class PhotoAdapter extends RecyclerView.Adapter<MainHolder> {
     @Inject
     PhotoApi photoApi;
 
-    public PhotoAdapter(Activity activity) {
-        ((GroovyApplication) activity.getApplication()).getAppComponent().inject(this);
-        mActivity = null;
-        photoList = null;
-        clickListener = null;
-    }
 
     public PhotoAdapter(Activity activity, List<Photo> photoList, MainHolder.ClickListener clickListener) {
+        ((GroovyApplication) activity.getApplication()).getAppComponent().inject(this);
         mActivity = activity;
         this.photoList = photoList;
         this.clickListener = clickListener;

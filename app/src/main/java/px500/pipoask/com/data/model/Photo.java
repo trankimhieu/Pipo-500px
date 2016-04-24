@@ -4,12 +4,15 @@ package px500.pipoask.com.data.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import org.parceler.Parcel;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Generated;
 
 @Generated("org.jsonschema2pojo")
+@Parcel
 public class Photo {
 
     @SerializedName("id")
@@ -26,22 +29,22 @@ public class Photo {
     public String description;
     @SerializedName("camera")
     @Expose
-    public Object camera;
+    public String camera;
     @SerializedName("lens")
     @Expose
-    public Object lens;
+    public String lens;
     @SerializedName("focal_length")
     @Expose
-    public Object focalLength;
+    public String focalLength;
     @SerializedName("iso")
     @Expose
-    public Object iso;
+    public String iso;
     @SerializedName("shutter_speed")
     @Expose
-    public Object shutterSpeed;
+    public String shutterSpeed;
     @SerializedName("aperture")
     @Expose
-    public Object aperture;
+    public String aperture;
     @SerializedName("times_viewed")
     @Expose
     public Integer timesViewed;
@@ -59,16 +62,16 @@ public class Photo {
     public Integer category;
     @SerializedName("location")
     @Expose
-    public Object location;
+    public String location;
     @SerializedName("latitude")
     @Expose
-    public Object latitude;
+    public String latitude;
     @SerializedName("longitude")
     @Expose
-    public Object longitude;
+    public String longitude;
     @SerializedName("taken_at")
     @Expose
-    public Object takenAt;
+    public String takenAt;
     @SerializedName("hi_res_uploaded")
     @Expose
     public Integer hiResUploaded;
@@ -98,7 +101,7 @@ public class Photo {
     public Integer salesCount;
     @SerializedName("for_sale_date")
     @Expose
-    public Object forSaleDate;
+    public String forSaleDate;
     @SerializedName("highest_rating")
     @Expose
     public Double highestRating;
@@ -108,9 +111,9 @@ public class Photo {
     @SerializedName("license_type")
     @Expose
     public Integer licenseType;
-    @SerializedName("converted")
-    @Expose
-    public Integer converted;
+    //    @SerializedName("converted")
+//    @Expose
+//    public Boolean converted;
     @SerializedName("collections_count")
     @Expose
     public Integer collectionsCount;

@@ -4,11 +4,14 @@ package px500.pipoask.com.data.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import org.parceler.Parcel;
+
 import javax.annotation.Generated;
 
 import px500.pipoask.com.data.model.avatar.Avatars;
 
 @Generated("org.jsonschema2pojo")
+@Parcel
 public class User {
 
     @SerializedName("id")
@@ -43,7 +46,7 @@ public class User {
     public String userpicHttpsUrl;
     @SerializedName("cover_url")
     @Expose
-    public Object coverUrl;
+    public String coverUrl;
     @SerializedName("upgrade_status")
     @Expose
     public Integer upgradeStatus;

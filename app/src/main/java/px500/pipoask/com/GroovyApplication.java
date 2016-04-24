@@ -2,6 +2,8 @@ package px500.pipoask.com;
 
 import android.app.Application;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
+
 import px500.pipoask.com.data.local.SharedPreferenceHelper;
 import px500.pipoask.com.di.component.ApplicationComponent;
 import px500.pipoask.com.di.component.DaggerApplicationComponent;
@@ -16,6 +18,7 @@ public class GroovyApplication extends Application {
         super.onCreate();
         initAppComponent();
         SharedPreferenceHelper.getInstance(getApplicationContext());
+        Fresco.initialize(getApplicationContext());
     }
 
     private void initAppComponent() {

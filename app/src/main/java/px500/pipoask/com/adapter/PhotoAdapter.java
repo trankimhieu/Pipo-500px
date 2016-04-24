@@ -1,6 +1,7 @@
 package px500.pipoask.com.adapter;
 
 import android.app.Activity;
+import android.net.Uri;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,8 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
-
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -77,9 +76,8 @@ public class PhotoAdapter extends RecyclerView.Adapter<MainHolder> {
 
         }
         photoHolder.imageButtonVote.setTag(photo);
-        Picasso.with(mActivity)
-                .load(photo.imageUrl)
-                .into(photoHolder.photo);
+        Uri uri = Uri.parse(photo.imageUrl);
+        photoHolder.photo.setImageURI(uri);
     }
 
     @Override

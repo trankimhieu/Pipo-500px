@@ -1,14 +1,14 @@
 package px500.pipoask.com.adapter;
 
 import android.app.Activity;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
+import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.List;
 
@@ -50,9 +50,10 @@ public class SearchAdapter extends RecyclerView.Adapter<MainHolder> {
     @Override
     public void onBindViewHolder(MainHolder viewHolder, int position) {
         SearchHolder searchHolder = (SearchHolder) viewHolder;
-        Picasso.with(mActivity)
-                .load(photoList.get(position).imageUrl)
-                .into(searchHolder.photo);
+        Photo photo = photoList.get(position);
+        Uri uri = Uri.parse(photo.imageUrl);
+        searchHolder.photo.setImageURI(uri);
+
         searchHolder.title.setText(photoList.get(position).name);
     }
 
@@ -67,7 +68,7 @@ public class SearchAdapter extends RecyclerView.Adapter<MainHolder> {
     public class SearchHolder extends MainHolder {
 
         @Bind(R.id.photo)
-        public ImageView photo;
+        public SimpleDraweeView photo;
 
         @Bind(R.id.title)
         public TextView title;

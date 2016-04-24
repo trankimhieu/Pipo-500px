@@ -2,9 +2,11 @@ package px500.pipoask.com.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.widget.ImageView;
+import android.view.View;
 
-public class PhotoView extends ImageView {
+import com.facebook.drawee.view.SimpleDraweeView;
+
+public class PhotoView extends SimpleDraweeView {
 
     public PhotoView(Context context) {
         super(context);
@@ -24,18 +26,18 @@ public class PhotoView extends ImageView {
 
         int desiredWidth = getContext().getResources().getDisplayMetrics().widthPixels / 2;
 
-        int widthMode = MeasureSpec.getMode(widthMeasureSpec);
-        int widthSize = MeasureSpec.getSize(widthMeasureSpec);
-        int heightMode = MeasureSpec.getMode(heightMeasureSpec);
-        int heightSize = MeasureSpec.getSize(heightMeasureSpec);
+        int widthMode = View.MeasureSpec.getMode(widthMeasureSpec);
+        int widthSize = View.MeasureSpec.getSize(widthMeasureSpec);
+        int heightMode = View.MeasureSpec.getMode(heightMeasureSpec);
+        int heightSize = View.MeasureSpec.getSize(heightMeasureSpec);
 
         int width;
         int height;
 
         //Measure Width
-        if (widthMode == MeasureSpec.EXACTLY) {
+        if (widthMode == View.MeasureSpec.EXACTLY) {
             width = widthSize;
-        } else if (widthMode == MeasureSpec.AT_MOST) {
+        } else if (widthMode == View.MeasureSpec.AT_MOST) {
             width = Math.min(desiredWidth, widthSize);
         } else {
             width = desiredWidth;

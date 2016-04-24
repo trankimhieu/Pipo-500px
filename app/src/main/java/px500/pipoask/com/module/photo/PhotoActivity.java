@@ -14,7 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
 
 import org.parceler.Parcels;
 
@@ -121,7 +121,7 @@ public class PhotoActivity extends BaseActivity implements IPhotoView {
     @Override
     public void imageLoaded(Photo photo) {
         llLoading.setVisibility(View.GONE);
-        Picasso.with(this)
+        Glide.with(this)
                 .load(photo.imageUrl)
                 .into(photoView);
 

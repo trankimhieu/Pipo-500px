@@ -81,6 +81,8 @@ dependencies {
 
     compile 'com.github.clans:fab:1.6.3'
 
+    compile 'com.race604.flyrefresh:library:2.0.0'
+
     compile 'com.commit451:PhotoView:1.2.4'
     compile 'com.jakewharton.rxbinding:rxbinding:0.2.0'
     compile 'com.github.500px:500px-android-sdk:-SNAPSHOT'

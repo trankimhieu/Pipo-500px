@@ -44,4 +44,7 @@
     <string name="submit">Hold me and pull to upload</string>
     <string name="action_search">Search</string>
     <string name="action_settings">Settings</string>
+
+    <string name="hint_name">Name</string>
+    <string name="hint_desc">Description</string>
 </resources>

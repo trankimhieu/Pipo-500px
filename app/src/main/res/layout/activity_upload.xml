@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -18,7 +17,7 @@
             <LinearLayout
                 android:id="@+id/list"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:background="#FFFFFF"
                 android:orientation="vertical"
                 android:paddingTop="24dp">
@@ -50,15 +49,16 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/submit_button"
-                        android:hint="Name"
+                        android:hint="@string/hint_name"
                         app:errorMessage="@string/error_message_empty"
                         app:errorType="empty" />
 
                     <Spinner
                         android:id="@+id/spinner_category"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/input_name" />
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:layout_below="@id/input_name"
+                        android:layout_marginTop="5dp" />
 
                     <com.emmasuzuki.easyform.EasyTextInputLayout
                         android:id="@+id/input_desc"
@@ -66,7 +66,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/spinner_category"
                         android:layout_marginTop="4dp"
-                        android:hint="Description"
+                        android:hint="@string/hint_desc"
                         app:errorMessage="@string/error_message_digit"
                         app:errorType="empty" />
 

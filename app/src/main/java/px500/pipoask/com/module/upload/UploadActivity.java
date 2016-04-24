@@ -6,30 +6,26 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Display;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.emmasuzuki.easyform.EasyTextInputLayout;
-import com.facebook.drawee.backends.pipeline.Fresco;
 import com.race604.flyrefresh.FlyRefreshLayout;
 
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import px500.pipoask.com.R;
 import px500.pipoask.com.data.local.ConstKV;
 import px500.pipoask.com.data.model.Category;
 import px500.pipoask.com.utiity.LogUtils;
-
-import static px500.pipoask.com.data.local.ConstKV.CATEGORY_LIST;
 
 public class UploadActivity extends AppCompatActivity {
 
@@ -55,6 +51,8 @@ public class UploadActivity extends AppCompatActivity {
 
     Uri mUri;
 
+    LayoutInflater inflater;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +65,7 @@ public class UploadActivity extends AppCompatActivity {
         Display display = getWindowManager().getDefaultDisplay();
         int swidth = display.getWidth();
         ViewGroup.LayoutParams params = imageViewPhoto.getLayoutParams();
-        params.width = ViewGroup.LayoutParams.FILL_PARENT;
+        params.width = ViewGroup.LayoutParams.MATCH_PARENT;
         params.height = swidth;
         imageViewPhoto.setLayoutParams(params);
         Bundle bundle = getIntent().getBundleExtra(ConstKV.BUNDLE_IMAGE_URI);
@@ -93,18 +91,32 @@ public class UploadActivity extends AppCompatActivity {
 
     private class CategorySpinnerAdapter extends ArrayAdapter<Category> {
 
+        List<Category> categoryList;
+
         public CategorySpinnerAdapter(Context context, int resource, List<Category> objects) {
             super(context, resource, objects);
+            inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            categoryList = objects;
         }
 
         @Override
         public View getDropDownView(int position, View convertView, ViewGroup parent) {
-            return super.getDropDownView(position, convertView, parent);
+            Category category = categoryList.get(position);
+            View row = inflater.inflate(android.R.layout.simple_dropdown_item_1line, parent, false);
+            TextView textView = (TextView) row.findViewById(android.R.id.text1);
+            textView.setTag(category);
+            textView.setText(category.name);
+            return row;
         }
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            return super.getView(position, convertView, parent);
+            Category category = categoryList.get(position);
+            View row = inflater.inflate(android.R.layout.simple_spinner_item, parent, false);
+            TextView textView = (TextView) row.findViewById(android.R.id.text1);
+            textView.setTag(category);
+            textView.setText(category.name);
+            return row;
         }
     }
 }

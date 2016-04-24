@@ -3,6 +3,7 @@ package px500.pipoask.com.module.main;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -27,6 +28,7 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import px500.pipoask.com.R;
 import px500.pipoask.com.adapter.PhotoAdapter;
 import px500.pipoask.com.adapter.holder.MainHolder;
@@ -37,10 +39,12 @@ import px500.pipoask.com.module.base.BaseActivity;
 import px500.pipoask.com.module.photo.PhotoActivity;
 import px500.pipoask.com.module.search.SearchActivity;
 import px500.pipoask.com.utiity.EndlessRecyclerOnScrollListener;
+import px500.pipoask.com.utiity.LogUtils;
 
 public class MainActivity extends BaseActivity implements IMainView,
         NavigationView.OnNavigationItemSelectedListener, MainHolder.ClickListener{
 
+    private static final String TAG = "MainActivity";
     @Bind(R.id.toolbar)
     Toolbar toolbar;
 
@@ -65,6 +69,8 @@ public class MainActivity extends BaseActivity implements IMainView,
     @Bind(R.id.loadMoreView)
     TextView loadMoreView;
 
+    @Bind(R.id.fab)
+    FloatingActionButton floatingActionButton;
     @Inject
     MainPresenter mainPresenter;
     EndlessRecyclerOnScrollListener endlessRecyclerOnScrollListener;
@@ -73,6 +79,11 @@ public class MainActivity extends BaseActivity implements IMainView,
     private PhotoAdapter photoAdapter;
     private int currentPage = 1;
     private String feature = Feature.Type.POPULAR;
+
+    @OnClick(R.id.fab)
+    void onClickFab(View view) {
+        LogUtils.debug(TAG, "Click FAB");
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -195,7 +206,7 @@ public class MainActivity extends BaseActivity implements IMainView,
     @Override
     public void hideLoadingData() {
         llLoading.setVisibility(View.GONE);
-        loadMoreView.setVisibility(View.GONE);
+        loadMoreView.setVisibility(View.INVISIBLE);
     }
 
     @Override

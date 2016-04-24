@@ -1,9 +1,9 @@
 package px500.pipoask.com.module.main;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -19,6 +19,12 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.github.clans.fab.FloatingActionButton;
+import com.jakewharton.rxbinding.view.RxView;
+import com.mlsdev.rximagepicker.RxImagePicker;
+import com.mlsdev.rximagepicker.Sources;
+import com.tbruyelle.rxpermissions.RxPermissions;
+
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
@@ -28,7 +34,6 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import px500.pipoask.com.R;
 import px500.pipoask.com.adapter.PhotoAdapter;
 import px500.pipoask.com.adapter.holder.MainHolder;
@@ -39,10 +44,9 @@ import px500.pipoask.com.module.base.BaseActivity;
 import px500.pipoask.com.module.photo.PhotoActivity;
 import px500.pipoask.com.module.search.SearchActivity;
 import px500.pipoask.com.utiity.EndlessRecyclerOnScrollListener;
-import px500.pipoask.com.utiity.LogUtils;
 
 public class MainActivity extends BaseActivity implements IMainView,
-        NavigationView.OnNavigationItemSelectedListener, MainHolder.ClickListener{
+        NavigationView.OnNavigationItemSelectedListener, MainHolder.ClickListener {
 
     private static final String TAG = "MainActivity";
     @Bind(R.id.toolbar)
@@ -69,8 +73,12 @@ public class MainActivity extends BaseActivity implements IMainView,
     @Bind(R.id.loadMoreView)
     TextView loadMoreView;
 
-    @Bind(R.id.fab)
-    FloatingActionButton floatingActionButton;
+    @Bind(R.id.fab_camera)
+    FloatingActionButton floatingActionButtonCamera;
+
+    @Bind(R.id.fab_upload)
+    FloatingActionButton floatingActionButtonUpload;
+
     @Inject
     MainPresenter mainPresenter;
     EndlessRecyclerOnScrollListener endlessRecyclerOnScrollListener;
@@ -80,10 +88,6 @@ public class MainActivity extends BaseActivity implements IMainView,
     private int currentPage = 1;
     private String feature = Feature.Type.POPULAR;
 
-    @OnClick(R.id.fab)
-    void onClickFab(View view) {
-        LogUtils.debug(TAG, "Click FAB");
-    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -98,6 +102,23 @@ public class MainActivity extends BaseActivity implements IMainView,
         initUI();
 
         mainPresenter.getPhotos(currentPage, feature, false);
+
+        RxView.clicks(floatingActionButtonCamera)
+                .compose(RxPermissions.getInstance(this).ensure(Manifest.permission.CAMERA))
+                .subscribe(granted -> {
+                    RxImagePicker.with(this).requestImage(Sources.CAMERA).subscribe(uri -> {
+                        //Get image by uri using one of image loading libraries. I use Glide in sample app.
+                    });
+                });
+
+        RxView.clicks(floatingActionButtonUpload)
+                .compose(RxPermissions.getInstance(this).ensure(Manifest.permission.MANAGE_DOCUMENTS))
+                .subscribe(granted -> {
+                    RxImagePicker.with(this).requestImage(Sources.GALLERY).subscribe(uri -> {
+                        //Get image by uri using one of image loading libraries. I use Glide in sample app.
+                    });
+                });
+
     }
 
 
@@ -142,7 +163,7 @@ public class MainActivity extends BaseActivity implements IMainView,
         if (item.getItemId() == R.id.action_search) {
             Intent intent = new Intent(MainActivity.this, SearchActivity.class);
             startActivity(intent);
-            overridePendingTransition( R.anim.slide_in_up, 0 );
+            overridePendingTransition(R.anim.slide_in_up, 0);
         }
         return super.onOptionsItemSelected(item);
     }

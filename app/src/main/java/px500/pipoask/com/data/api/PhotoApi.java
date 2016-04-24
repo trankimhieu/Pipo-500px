@@ -5,6 +5,7 @@ import px500.pipoask.com.data.model.PhotoDetail;
 import px500.pipoask.com.data.model.PhotoList;
 import px500.pipoask.com.data.model.VoteList;
 import retrofit2.http.DELETE;
+import retrofit2.http.Field;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -22,8 +23,8 @@ public interface PhotoApi {
     @GET("/v1/photos/search")
     Observable<PhotoList> search(@Query("term") String keyword);
 
-    @GET("/v1/photos/{id}/votes")
-    Observable<VoteList> getVoteList(@Path("id") String id);
+    @POST("/v1/photos")
+    Observable<Photo> postPhoto(@Field("name") String name, @Field("description") String description, @Field("category") String category);
 
     @POST("/v1/photos/{id}/vote")
     Observable<Photo> postVote(@Path("id") Integer id, @Query("vote") int vote);

@@ -39,7 +39,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".module.upload.UploadActivity"></activity>
+        <activity android:name=".module.upload.UploadActivity" android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

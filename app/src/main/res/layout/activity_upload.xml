@@ -1,13 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.race604.flyrefresh.FlyRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/fly_layout"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/list"
+    <com.race604.flyrefresh.FlyRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/fly_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#FFFFFF"
-        android:paddingTop="24dp" />
-</com.race604.flyrefresh.FlyRefreshLayout>
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#FFFFFF"
+                android:orientation="vertical"
+                android:paddingTop="24dp">
+
+
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/image_view_photo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerInside" />
+
+                <com.emmasuzuki.easyform.EasyForm xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:submitButton="@+id/submit_button">
+
+                    <Button
+                        android:id="@id/submit_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorAccent"
+                        android:text="@string/submit"
+                        android:textColor="@android:color/white" />
+
+                    <com.emmasuzuki.easyform.EasyTextInputLayout
+                        android:id="@+id/input_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/submit_button"
+                        android:hint="Name"
+                        app:errorMessage="@string/error_message_empty"
+                        app:errorType="empty" />
+
+                    <Spinner
+                        android:id="@+id/spinner_category"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/input_name" />
+
+                    <com.emmasuzuki.easyform.EasyTextInputLayout
+                        android:id="@+id/input_desc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/spinner_category"
+                        android:layout_marginTop="4dp"
+                        android:hint="Description"
+                        app:errorMessage="@string/error_message_digit"
+                        app:errorType="empty" />
+
+                </com.emmasuzuki.easyform.EasyForm>
+
+            </LinearLayout>
+        </ScrollView>
+
+    </com.race604.flyrefresh.FlyRefreshLayout>
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@android:color/transparent"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+</RelativeLayout>

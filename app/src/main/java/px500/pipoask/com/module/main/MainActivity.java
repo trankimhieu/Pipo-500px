@@ -18,6 +18,8 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import org.parceler.Parcels;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -222,7 +224,7 @@ public class MainActivity extends BaseActivity implements IMainView,
     @Override
     public void onItemClicked(View v, int position) {
         Intent intent = new Intent(MainActivity.this, PhotoActivity.class);
-        intent.putExtra(PhotoActivity.PHOTO_ID, photoList.get(position));
+        intent.putExtra(PhotoActivity.PHOTO_ID, Parcels.wrap(photoList.get(position)));
         startActivity(intent);
     }
 }

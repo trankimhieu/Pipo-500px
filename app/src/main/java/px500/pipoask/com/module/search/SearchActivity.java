@@ -7,17 +7,16 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.jakewharton.rxbinding.widget.RxTextView;
 import com.jakewharton.rxbinding.widget.TextViewTextChangeEvent;
 
-import java.util.ArrayList;
+import org.parceler.Parcels;
+
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -29,6 +28,7 @@ import px500.pipoask.com.R;
 import px500.pipoask.com.adapter.SearchAdapter;
 import px500.pipoask.com.adapter.holder.MainHolder;
 import px500.pipoask.com.data.model.Photo;
+import px500.pipoask.com.data.model.PhotoList;
 import px500.pipoask.com.module.base.BaseActivity;
 import px500.pipoask.com.module.photo.PhotoActivity;
 import px500.pipoask.com.utiity.CommonUtils;
@@ -37,7 +37,7 @@ import px500.pipoask.com.utiity.StringUtils;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 
-public class SearchActivity extends BaseActivity implements ISearchView, MainHolder.ClickListener{
+public class SearchActivity extends BaseActivity implements ISearchView, MainHolder.ClickListener {
 
     public static final String TAG = "SearchActivity";
 
@@ -54,7 +54,7 @@ public class SearchActivity extends BaseActivity implements ISearchView, MainHol
     RecyclerView recyclerView;
     @Inject
     SearchPresenter searchPresenter;
-    private List<Photo> photoList;
+    private PhotoList photoList;
     private SearchAdapter searchAdapter;
 
     @Override
@@ -74,19 +74,14 @@ public class SearchActivity extends BaseActivity implements ISearchView, MainHol
     private void initUI() {
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_search_black_24dp);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> finish());
 
-        photoList = new ArrayList<>();
-        searchAdapter = new SearchAdapter(this, photoList, this);
+        photoList = new PhotoList();
+        searchAdapter = new SearchAdapter(this, photoList.photos, this);
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(),
-                LinearLayoutManager.VERTICAL,false));
+                LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(searchAdapter);
 
         RxTextView.textChangeEvents(searchbox)
@@ -94,15 +89,12 @@ public class SearchActivity extends BaseActivity implements ISearchView, MainHol
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(getSearchObserver());
 
-        searchbox.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    CommonUtils.hideKeyboard(SearchActivity.this);
-                    return true;
-                }
-                return false;
+        searchbox.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                CommonUtils.hideKeyboard(SearchActivity.this);
+                return true;
             }
+            return false;
         });
 
 
@@ -164,7 +156,7 @@ public class SearchActivity extends BaseActivity implements ISearchView, MainHol
     @Override
     public void onItemClicked(View v, int position) {
         Intent intent = new Intent(SearchActivity.this, PhotoActivity.class);
-        intent.putExtra(PhotoActivity.PHOTO_ID, photoList.get(position));
+        intent.putExtra(PhotoActivity.PHOTO_ID, Parcels.wrap(photoList.photos.get(position)));
         startActivity(intent);
     }
 }

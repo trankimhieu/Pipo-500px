@@ -13,275 +13,51 @@ public class User {
 
     @SerializedName("id")
     @Expose
-    private Integer id;
+    public Integer id;
     @SerializedName("username")
     @Expose
-    private String username;
+    public String username;
     @SerializedName("firstname")
     @Expose
-    private String firstname;
+    public String firstname;
     @SerializedName("lastname")
     @Expose
-    private String lastname;
+    public String lastname;
     @SerializedName("city")
     @Expose
-    private String city;
+    public String city;
     @SerializedName("country")
     @Expose
-    private String country;
+    public String country;
     @SerializedName("usertype")
     @Expose
-    private Integer usertype;
+    public Integer usertype;
     @SerializedName("fullname")
     @Expose
-    private String fullname;
+    public String fullname;
     @SerializedName("userpic_url")
     @Expose
-    private String userpicUrl;
+    public String userpicUrl;
     @SerializedName("userpic_https_url")
     @Expose
-    private String userpicHttpsUrl;
+    public String userpicHttpsUrl;
     @SerializedName("cover_url")
     @Expose
-    private String coverUrl;
+    public Object coverUrl;
     @SerializedName("upgrade_status")
     @Expose
-    private Integer upgradeStatus;
+    public Integer upgradeStatus;
     @SerializedName("store_on")
     @Expose
-    private Boolean storeOn;
+    public Boolean storeOn;
     @SerializedName("affection")
     @Expose
-    private Integer affection;
+    public Integer affection;
     @SerializedName("avatars")
     @Expose
-    private Avatars avatars;
+    public Avatars avatars;
     @SerializedName("followers_count")
     @Expose
-    private Integer followersCount;
-
-    /**
-     * @return The id
-     */
-    public Integer getId() {
-        return id;
-    }
-
-    /**
-     * @param id The id
-     */
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    /**
-     * @return The username
-     */
-    public String getUsername() {
-        return username;
-    }
-
-    /**
-     * @param username The username
-     */
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    /**
-     * @return The firstname
-     */
-    public String getFirstname() {
-        return firstname;
-    }
-
-    /**
-     * @param firstname The firstname
-     */
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
-
-    /**
-     * @return The lastname
-     */
-    public String getLastname() {
-        return lastname;
-    }
-
-    /**
-     * @param lastname The lastname
-     */
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
-
-    /**
-     * @return The city
-     */
-    public String getCity() {
-        return city;
-    }
-
-    /**
-     * @param city The city
-     */
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    /**
-     * @return The country
-     */
-    public String getCountry() {
-        return country;
-    }
-
-    /**
-     * @param country The country
-     */
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    /**
-     * @return The usertype
-     */
-    public Integer getUsertype() {
-        return usertype;
-    }
-
-    /**
-     * @param usertype The usertype
-     */
-    public void setUsertype(Integer usertype) {
-        this.usertype = usertype;
-    }
-
-    /**
-     * @return The fullname
-     */
-    public String getFullname() {
-        return fullname;
-    }
-
-    /**
-     * @param fullname The fullname
-     */
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
-    }
-
-    /**
-     * @return The userpicUrl
-     */
-    public String getUserpicUrl() {
-        return userpicUrl;
-    }
-
-    /**
-     * @param userpicUrl The userpic_url
-     */
-    public void setUserpicUrl(String userpicUrl) {
-        this.userpicUrl = userpicUrl;
-    }
-
-    /**
-     * @return The userpicHttpsUrl
-     */
-    public String getUserpicHttpsUrl() {
-        return userpicHttpsUrl;
-    }
-
-    /**
-     * @param userpicHttpsUrl The userpic_https_url
-     */
-    public void setUserpicHttpsUrl(String userpicHttpsUrl) {
-        this.userpicHttpsUrl = userpicHttpsUrl;
-    }
-
-    /**
-     * @return The coverUrl
-     */
-    public String getCoverUrl() {
-        return coverUrl;
-    }
-
-    /**
-     * @param coverUrl The cover_url
-     */
-    public void setCoverUrl(String coverUrl) {
-        this.coverUrl = coverUrl;
-    }
-
-    /**
-     * @return The upgradeStatus
-     */
-    public Integer getUpgradeStatus() {
-        return upgradeStatus;
-    }
-
-    /**
-     * @param upgradeStatus The upgrade_status
-     */
-    public void setUpgradeStatus(Integer upgradeStatus) {
-        this.upgradeStatus = upgradeStatus;
-    }
-
-    /**
-     * @return The storeOn
-     */
-    public Boolean getStoreOn() {
-        return storeOn;
-    }
-
-    /**
-     * @param storeOn The store_on
-     */
-    public void setStoreOn(Boolean storeOn) {
-        this.storeOn = storeOn;
-    }
-
-    /**
-     * @return The affection
-     */
-    public Integer getAffection() {
-        return affection;
-    }
-
-    /**
-     * @param affection The affection
-     */
-    public void setAffection(Integer affection) {
-        this.affection = affection;
-    }
-
-    /**
-     * @return The avatars
-     */
-    public Avatars getAvatars() {
-        return avatars;
-    }
-
-    /**
-     * @param avatars The avatars
-     */
-    public void setAvatars(Avatars avatars) {
-        this.avatars = avatars;
-    }
-
-    /**
-     * @return The followersCount
-     */
-    public Integer getFollowersCount() {
-        return followersCount;
-    }
-
-    /**
-     * @param followersCount The followers_count
-     */
-    public void setFollowersCount(Integer followersCount) {
-        this.followersCount = followersCount;
-    }
+    public Integer followersCount;
 
 }

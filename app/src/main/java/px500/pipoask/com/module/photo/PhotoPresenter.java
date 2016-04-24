@@ -7,18 +7,15 @@ import javax.inject.Inject;
 import px500.pipoask.com.GroovyApplication;
 import px500.pipoask.com.R;
 import px500.pipoask.com.data.api.PhotoApi;
-import px500.pipoask.com.data.model.PhotoDetail;
 import px500.pipoask.com.module.base.BasePresenter;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 public class PhotoPresenter extends BasePresenter<IPhotoView> {
 
+    private final Activity activity;
     @Inject
     PhotoApi photoApi;
-
-    private final Activity activity;
 
     public PhotoPresenter(Activity activity) {
         this.activity = activity;
@@ -35,25 +32,19 @@ public class PhotoPresenter extends BasePresenter<IPhotoView> {
         super.detachView();
     }
 
-    public void getPhotoById(String id) {
+    public void getPhotoById(Integer id) {
         getMvpView().loadingImage();
         photoApi.getPhotoById(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<PhotoDetail>() {
-                    @Override
-                    public void call(PhotoDetail photoDetail) {
-                        if (photoDetail != null) {
-                            getMvpView().imageLoaded(photoDetail.photo);
-                        } else {
-                            getMvpView().errorLoadingImage(activity.getString(R.string.empty_result));
-                        }
+                .subscribe(photoDetail -> {
+                    if (photoDetail != null) {
+                        getMvpView().imageLoaded(photoDetail.photo);
+                    } else {
+                        getMvpView().errorLoadingImage(activity.getString(R.string.empty_result));
                     }
-                }, new Action1<Throwable>() {
-                    @Override
-                    public void call(Throwable throwable) {
-                        getMvpView().errorLoadingImage(throwable.getMessage());
-                    }
+                }, throwable -> {
+                    getMvpView().errorLoadingImage(throwable.getMessage());
                 });
     }
 

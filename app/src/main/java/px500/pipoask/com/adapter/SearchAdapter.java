@@ -3,15 +3,19 @@ package px500.pipoask.com.adapter;
 import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import px500.pipoask.com.R;
 import px500.pipoask.com.adapter.holder.MainHolder;
-import px500.pipoask.com.adapter.holder.SearchHolder;
 import px500.pipoask.com.data.model.Photo;
 
 public class SearchAdapter extends RecyclerView.Adapter<MainHolder> {
@@ -47,7 +51,7 @@ public class SearchAdapter extends RecyclerView.Adapter<MainHolder> {
     public void onBindViewHolder(MainHolder viewHolder, int position) {
         SearchHolder searchHolder = (SearchHolder) viewHolder;
         Picasso.with(mActivity)
-                .load(photoList.get(position).image_url)
+                .load(photoList.get(position).imageUrl)
                 .into(searchHolder.photo);
         searchHolder.title.setText(photoList.get(position).name);
     }
@@ -58,5 +62,19 @@ public class SearchAdapter extends RecyclerView.Adapter<MainHolder> {
             return photoList.size();
         }
         return 0;
+    }
+
+    public class SearchHolder extends MainHolder {
+
+        @Bind(R.id.photo)
+        public ImageView photo;
+
+        @Bind(R.id.title)
+        public TextView title;
+
+        public SearchHolder(View view) {
+            super(view);
+            ButterKnife.bind(this, view);
+        }
     }
 }

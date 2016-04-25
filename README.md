@@ -15,8 +15,8 @@ different direction, focusing on the app’s overall ease of use could
 be seen as useful.
 
 ##### Design Implementation
-There is no deadline, but ideally the product should be completed in 2 days.
-Design your app that it has two or three screens for main feature.
+There is no deadline, but ideally, the product should be completed in 2 days.
+Design your app that it has two or three screens for the main feature.
 
 #### Mobile Operating Systems
 Android or iOS. Product must use either Java or Objective-C or Swift. We’d like you to use Swift if possible.
@@ -30,9 +30,9 @@ Android or iOS. Product must use either Java or Objective-C or Swift. We’d lik
 
 I take it little bit time to brainstorming about which service I will use and realize that 500px API is good one to use. They have [API Console](https://apigee.com/vova/embed/console/api500px)
 
-But one problems is they don't use standar Miltipart UPLOAD + OAuth and it take my time to reslove problems.
+But one problem is they don't use standard Multipart UPLOAD + OAuth and it takes my time to resolve problems.
 
-I want to add chat to this app because I think it is so wonderful. It like you can say WOW with you friend realtime and hope it is an increadible feature of this app.
+I want to add chat to this app because I think it is so wonderful. It like you can say WOW with you friend real-time and hope it is an incredible feature of this app.
 
 Now, let say about features that I worked over 72 hours
 
@@ -40,12 +40,12 @@ Now, let say about features that I worked over 72 hours
 
 ###1. Login and OAuth to 500px API
 
-Login need create `token` and `token_secret`. So I use [500px Android SDK]("https://github.com/500px/500px-android-sdk") to create it with bellow code
+Login need creates `token` and `token_secret`. So I use [500px Android SDK]("https://github.com/500px/500px-android-sdk") to create it with bellow code
 
 Implement callback `XAuth500pxTask.Delegate`
 
 ```
-	@Override
+    @Override
     public void onSuccess(AccessToken accessToken) {
         getMvpView().hideLoadingData();
         LogUtils.debug(TAG, accessToken.getToken());
@@ -62,7 +62,7 @@ Implement callback `XAuth500pxTask.Delegate`
 
 ```
 
-and make call
+and make the call
 
 ```
 XAuth500pxTask loginTask = new XAuth500pxTask(this);
@@ -70,7 +70,7 @@ loginTask.execute(BuildConfig.CONSUMER_KEY, BuildConfig.CONSUMER_KEY_SECRET, ema
 ```
 
 And after that, we need to sign OAuth every request. Because I use `Retrofit 2` so it is so easily with `interceptor`
-I inject an interceptor when create `OkHttp Client`
+I inject an interceptor when to create `OkHttp Client`
 
 ```
 //TODO: Save it in local memory
@@ -83,7 +83,7 @@ Interceptor interceptor = new SigningInterceptor(consumer);
 okHttpClientBuilder.addInterceptor(interceptor);
 ```
 
-That all and from now, we can make every API call with Oauth identity
+That all and from now, we can make every API call with OAuth identity
 ![flyrefresh](./images/1.png)
 
 ###2. Image list display
@@ -95,26 +95,26 @@ One more point to make it scroll more smoothly is use `Fresco` from `Facebook` [
 
 ###3. Image uploading (WIP)
 
-Why this one has `WIP` status, because `500px Upload API` not use normal Miltipart POST, they mix it with custom OAuth and it take time, so I focus to another function first. But this `Activity` have so wonderful UX.
+Why this one has `WIP` status, because `500px Upload API` not use normal Multipart POST, they mix it with custom OAuth and it takes time, so I focus on another function first. But this `Activity` have so wonderful UX.
 
 ![flyrefresh](./images/flyrefresh.gif)
 ![flyrefresh](./images/6.png)
 
 ###4. Vote with animation
 
-I add a small heart inside thumbnal to let user can `vote` and `unvote` a photo and it have loading indicator. It is not a big thing to say but it make users don't feel borring with this function.
+I add a small heart inside thumbnail to let user can `vote` and `unvote` a photo and it have loading indicator. It is not a big thing to say but it make users don't feel boring with this function.
 
 ###5. View image detail with zoom enabled
 
-I load `1080` size and use `Glide` here to process image. My goal is try to reduce disk cache space, but it take more time to processing photo.
+I load `1080` size and use `Glide` here to process image. My goal is to try to reduce disk cache space, but it take more time to processing photo.
 
 ![flyrefresh](./images/3.png)
 
 ###6. Chat with global users when viewing photo
 
-It is one awesome feature, I think. I use Firebase to support realtime chat. And I add up delivery status functions
+It is one awesome feature, I think. I use Firebase to support real-time chat. And I add up delivery status functions
 
-- Sending (on the way comming to the cloud servers)
+- Sending (on the way coming to the cloud servers)
 - Delivery (on cloud and not yet come to other user phones) 
 - Sent (already came to other user phones)
 
@@ -131,7 +131,7 @@ With some first version of Android, We don't have powerful devices and many time
 ####A. Fresco
 
 - Fresco’s image pipeline will load images from the network, local storage, or local resources. To save data and CPU, it has three levels of cache; two in memory and another in internal storage.
-- Fresco’s Drawees show a placeholder for you until the image has loaded and automatically show to the image when it arrives. When the image goes off-screen, it automatically releases its memory.
+- Fresco’s Drawees show a placeholder for you until the image has loaded and automatically show the image when it arrives. When the image goes off-screen, it automatically releases its memory.
 
 And it can handle `Memory`,`Loading`,`Drawing` and `Streaming` so good.
 
@@ -144,16 +144,16 @@ Cool features from `Glide`
 - Bitmap and resource pooling to minimize jank.
 - Arbitrary transformations.
 
-I use `Glide` because when load `1080px` photo. It take a lot of memory, so `Glide` will reduce it by resize image before display.
+I use `Glide` because when load `1080px` photo. It takes a lot of memory, so `Glide` will reduce it by resizing image before display.
 
 ### RxJava
 
-Implement some where to make development faster and code have more semantic
+Implement somewhere to make development faster and code have more semantic
 
-RxJava + Retrofit2 (In this project it is still not use all weapon that RxJava brought to us)
+RxJava + Retrofit2 (In this project it is still not used all weapon that RxJava brought to us)
 
 ```
-	photoApi.getFeaturePhotos(page, feature)
+    photoApi.getFeaturePhotos(page, feature)
             .subscribeOn(Schedulers.io())
     I    .observeOn(AndroidSchedulers.mainThread())
              .subscribe(new Subscriber<PhotoList>() {
@@ -178,7 +178,7 @@ RxBinding
 
 Import
 ```
-	compile 'com.jakewharton.rxbinding:rxbinding:0.4.0'
+    compile 'com.jakewharton.rxbinding:rxbinding:0.4.0'
     compile 'com.jakewharton.rxbinding:rxbinding-support-v4:0.4.0'
     compile 'com.jakewharton.rxbinding:rxbinding-appcompat-v7:0.4.0'
     compile 'com.jakewharton.rxbinding:rxbinding-design:0.4.0'
@@ -191,7 +191,7 @@ Import
 Use it to handle with button click and RxPermission
 
 ```
-		RxView.clicks(floatingActionButtonCamera)
+        RxView.clicks(floatingActionButtonCamera)
                 .compose(RxPermissions.getInstance(this).ensure(Manifest.permission.CAMERA))
                 .subscribe(granted -> {
                     RxImagePicker.with(this).requestImage(Sources.CAMERA).subscribe(this::openUploadWithUri);
@@ -213,10 +213,10 @@ Simple trick to get love from users, Don't let user confuse between loading and 
 ####2. Uploading animation
 ![flyrefresh](./images/flyrefresh.gif)
 
-It make they feel that they have just launched an paper plan and it so cool.
+It makes they feel that they have just launched a paper plan and it so cool.
 
 ####3. Sliding up to chat
-Users don't need to go to another fragment or activity to chat and easy comeback to review photo when they say WOW together about awesome photots. 
+Users don't need to go to another fragment or activity to chat and easy comeback to review photo when they say WOW together about awesome photos. 
 
 ### Realtime Chat
 
@@ -363,7 +363,7 @@ public class ChatHelper {
 
 FirebaseChildEventListener
 ```
-	FirebaseHelper.getInstance().getChatFirebaseClient(photoId).addChildEventListener(new ChildEventListener() {
+    FirebaseHelper.getInstance().getChatFirebaseClient(photoId).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 ChatItem tempItem = new ChatItem(dataSnapshot);
@@ -420,7 +420,7 @@ FirebaseChildEventListener
 
 ### CI
 
-I use travis CI and althought not implement any useful test but it will be added up later.
+I use Travis CI and although not implement any useful test but it will be added up later.
 [https://travis-ci.org/trankimhieu/Pipo-500px](https://travis-ci.org/trankimhieu/Pipo-500px)
 
 ## Next version

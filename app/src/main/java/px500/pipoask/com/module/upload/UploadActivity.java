@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -18,6 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.emmasuzuki.easyform.EasyTextInputLayout;
 import com.koushikdutta.ion.Ion;
@@ -33,12 +35,14 @@ import butterknife.ButterKnife;
 import oauth.signpost.basic.DefaultOAuthConsumer;
 import px500.pipoask.com.BuildConfig;
 import px500.pipoask.com.GroovyApplication;
+import px500.pipoask.com.NavigationManager;
 import px500.pipoask.com.R;
 import px500.pipoask.com.data.api.PhotoApi;
 import px500.pipoask.com.data.local.ConstKV;
 import px500.pipoask.com.data.local.SharedPreferenceHelper;
 import px500.pipoask.com.data.model.Category;
 import px500.pipoask.com.data.model.Upload;
+import px500.pipoask.com.module.main.MainActivity;
 import px500.pipoask.com.utiity.LogUtils;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -170,7 +174,7 @@ public class UploadActivity extends AppCompatActivity {
                 photoApi.postPhoto(name, desc, cat.id).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Subscriber<Upload>() {
                     @Override
                     public void onCompleted() {
-                        flyLayout.onRefreshFinish();
+                        Toast.makeText(UploadActivity.this,getString(R.string.uploading),Toast.LENGTH_LONG).show();
                     }
 
                     @Override
@@ -199,6 +203,8 @@ public class UploadActivity extends AppCompatActivity {
                                         LogUtils.error(TAG, e.getMessage());
                                     if (result != null)
                                         LogUtils.debug(TAG, result.toString());
+                                    flyLayout.onRefreshFinish();
+                                    new Handler().postDelayed(() -> new NavigationManager<MainActivity>().openActivity(UploadActivity.this, MainActivity.class), 300);
                                 });
                     }
                 });

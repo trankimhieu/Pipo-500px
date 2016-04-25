@@ -13,6 +13,7 @@ import javax.inject.Inject;
 import px500.pipoask.com.BuildConfig;
 import px500.pipoask.com.GroovyApplication;
 import px500.pipoask.com.NavigationManager;
+import px500.pipoask.com.RxBus;
 import px500.pipoask.com.data.api.PhotoApi;
 import px500.pipoask.com.data.local.ConstKV;
 import px500.pipoask.com.data.local.SharedPreferenceHelper;
@@ -59,6 +60,7 @@ public class LoginPresenter extends BasePresenter<ILoginView> implements XAuth50
         LogUtils.debug(TAG, accessToken.getToken());
         SharedPreferenceHelper.setSharedPreferenceString(ConstKV.USER_500PX_TOKEN, accessToken.getToken());
         SharedPreferenceHelper.setSharedPreferenceString(ConstKV.USER_500PX_TOKEN_SECRET, accessToken.getTokenSecret());
+        RxBus.getInstance().post(new LoginSuccessEvent());
         photoApi.getUser(email).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Subscriber<ShowUser>() {
             @Override
             public void onCompleted() {
@@ -96,5 +98,8 @@ public class LoginPresenter extends BasePresenter<ILoginView> implements XAuth50
             LogUtils.debug(TAG + " Token Secret", token_secret);
             new NavigationManager<MainActivity>().openActivity((Context) getMvpView(), MainActivity.class);
         }
+    }
+
+    public class LoginSuccessEvent {
     }
 }

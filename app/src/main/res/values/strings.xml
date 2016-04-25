@@ -56,4 +56,5 @@
     <string name="action_anchor_disable">Disable Anchor Point</string>
     <string name="swipe_up_bar_text"><![CDATA[<b>Let say WOW with your friends</b><br/> Brought to you by <a href="http://kimhieu.me">Hieu Tran</a><br/><i>Swipe up to begin talking with awesome peoples</i>]]></string>
     <string name="swipe_down_bar_text"><![CDATA[<b>Let say WOW with your friends</b><br/> Brought to you by <a href="http://kimhieu.me">Hieu Tran</a><br/><i>Swipe down to see incredible photo</i>]]></string>
+    <string name="uploading">Uploading, please wait...</string>
 </resources>

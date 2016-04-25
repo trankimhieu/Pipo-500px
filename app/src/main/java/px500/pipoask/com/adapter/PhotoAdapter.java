@@ -114,38 +114,59 @@ public class PhotoAdapter extends RecyclerView.Adapter<MainHolder> {
 
             imageButtonVote.setVisibility(View.GONE);
             progressBarVote.setVisibility(View.VISIBLE);
-
-
             Photo photo = (Photo) view.getTag();
-            if (photo.voted) {
-                photoApi.deleteVote(photo.id).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Subscriber<Photo>() {
-                    @Override
-                    public void onCompleted() {
+            if (photo.voted != null) {
+                if (photo.voted) {
+                    photoApi.deleteVote(photo.id).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Subscriber<Photo>() {
+                        @Override
+                        public void onCompleted() {
 
-                    }
+                        }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        LogUtils.error(TAG, e.getMessage());
-                    }
+                        @Override
+                        public void onError(Throwable e) {
+                            LogUtils.error(TAG, e.getMessage());
+                        }
 
-                    @Override
-                    public void onNext(Photo photo) {
-                        imageButtonVote.setBackground(ContextCompat.getDrawable(mActivity, R.drawable.icon_vote0));
-                        imageButtonVote.setVisibility(View.VISIBLE);
-                        progressBarVote.setVisibility(View.GONE);
-                    }
-                });
+                        @Override
+                        public void onNext(Photo photo) {
+                            imageButtonVote.setBackground(ContextCompat.getDrawable(mActivity, R.drawable.icon_vote0));
+                            imageButtonVote.setVisibility(View.VISIBLE);
+                            progressBarVote.setVisibility(View.GONE);
+                        }
+                    });
+                } else {
+                    photoApi.postVote(photo.id, 1).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Subscriber<Photo>() {
+                        @Override
+                        public void onCompleted() {
+
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+
+                        }
+
+                        @Override
+                        public void onNext(Photo photo) {
+                            imageButtonVote.setBackground(ContextCompat.getDrawable(mActivity, R.drawable.icon_vote1));
+                            imageButtonVote.setVisibility(View.VISIBLE);
+                            progressBarVote.setVisibility(View.GONE);
+                        }
+                    });
+                }
             } else {
                 photoApi.postVote(photo.id, 1).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Subscriber<Photo>() {
                     @Override
                     public void onCompleted() {
-
+                        imageButtonVote.setBackground(ContextCompat.getDrawable(mActivity, R.drawable.icon_vote1));
+                        imageButtonVote.setVisibility(View.VISIBLE);
+                        progressBarVote.setVisibility(View.GONE);
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        LogUtils.error(TAG, e.getMessage());
+                        LogUtils.error(TAG,e.getMessage());
                     }
 
                     @Override
@@ -157,6 +178,6 @@ public class PhotoAdapter extends RecyclerView.Adapter<MainHolder> {
                 });
             }
         }
-
     }
+
 }

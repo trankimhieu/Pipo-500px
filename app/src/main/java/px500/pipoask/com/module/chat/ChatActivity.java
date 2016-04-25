@@ -82,11 +82,11 @@ public class ChatActivity extends AppCompatActivity {
                 if (ChatHelper.getInstance(ChatActivity.this).isFromThisUser(tempItem)) {
                     if (tempItem.getStatus().equals(ChatHelper.CHAT_STATUS_SENDING)) {
                         tempItem.setStatus(ChatHelper.CHAT_STATUS_DELIVERED);
-                        FirebaseHelper.getInstance().updateChatItemStatus(tempItem);
+                        FirebaseHelper.getInstance().updateChatItemStatus(tempItem, photoId);
                     }
                 } else {
                     tempItem.setStatus(ChatHelper.CHAT_STATUS_RECEIVED);
-                    FirebaseHelper.getInstance().updateChatItemStatus(tempItem);
+                    FirebaseHelper.getInstance().updateChatItemStatus(tempItem, photoId);
                 }
 
                 ChatItem item = ChatListHelper.findItem(chatItemList, tempItem);

@@ -48,8 +48,8 @@ public class FirebaseHelper {
         return firebaseClient.child(CHAT_COLLECTION).child(String.valueOf(photoId));
     }
 
-    public void updateChatItemStatus(ChatItem item) {
-        Firebase firebaseItem = getChatFirebaseClient().child(item.getId());
+    public void updateChatItemStatus(ChatItem item, int photoId) {
+        Firebase firebaseItem = getChatFirebaseClient(photoId).child(item.getId());
         Map<String, Object> status = new HashMap<>();
         status.put("status", item.getStatus());
         firebaseItem.updateChildren(status);

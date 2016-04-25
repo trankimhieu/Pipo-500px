@@ -10,6 +10,7 @@ import px500.pipoask.com.module.login.LoginPresenter;
 import px500.pipoask.com.module.main.MainPresenter;
 import px500.pipoask.com.module.photo.PhotoPresenter;
 import px500.pipoask.com.module.search.SearchPresenter;
+import px500.pipoask.com.module.upload.UploadActivity;
 
 @Singleton
 @Component(
@@ -24,4 +25,6 @@ public interface ApplicationComponent  {
     void inject(SearchPresenter searchPresenter);
     void inject(LoginPresenter loginPresenter);
     void inject(PhotoAdapter photoAdapter);
+
+    void inject(UploadActivity uploadActivity);
 }

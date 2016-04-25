@@ -18,6 +18,7 @@ android {
 
         debug {
             buildConfigField "String", "ENDPOINT", '"https://api.500px.com"'
+            buildConfigField "String", "ENDPOINT_UPLOAD", '"https://upload.500px.com"'
             buildConfigField "String", "CONSUMER_KEY_SECRET", '"g1FIiNqo2Si8tEwNrqPJZMJFuF0xU7IwP7gqQ3ep"'
             buildConfigField "String", "CONSUMER_KEY", '"6ChBZTzYgNc3DBlLWzlWhbyVBrSWdxrvuyXJBsGl"'
         }
@@ -25,8 +26,8 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField "String", "ENDPOINT", '"https://api.500px.com"'
+            buildConfigField "String", "ENDPOINT_UPLOAD", '"https://upload.500px.com"'
             buildConfigField "String", "CONSUMER_KEY_SECRET", '"g1FIiNqo2Si8tEwNrqPJZMJFuF0xU7IwP7gqQ3ep"'
             buildConfigField "String", "CONSUMER_KEY", '"6ChBZTzYgNc3DBlLWzlWhbyVBrSWdxrvuyXJBsGl"'
         }
@@ -69,6 +70,22 @@ dependencies {
 
     compile 'io.reactivex:rxjava:1.0.10'
     compile 'io.reactivex:rxandroid:0.24.0'
+
+    compile 'com.mlsdev.rximagepicker:library:1.1.2'
+
+    compile 'com.tbruyelle.rxpermissions:rxpermissions:0.7.0@aar'
+    compile 'com.jakewharton.rxbinding:rxbinding:0.4.0'
+    compile 'com.jakewharton.rxbinding:rxbinding-support-v4:0.4.0'
+    compile 'com.jakewharton.rxbinding:rxbinding-appcompat-v7:0.4.0'
+    compile 'com.jakewharton.rxbinding:rxbinding-design:0.4.0'
+    compile 'com.jakewharton.rxbinding:rxbinding-recyclerview-v7:0.4.0'
+
+    compile 'com.github.clans:fab:1.6.3'
+
+    compile 'com.koushikdutta.ion:ion:2.1.7'
+
+    compile 'com.race604.flyrefresh:library:2.0.0'
+    compile 'com.emmasuzuki:easyform:1.0.0'
 
     compile 'com.commit451:PhotoView:1.2.4'
     compile 'com.jakewharton.rxbinding:rxbinding:0.2.0'

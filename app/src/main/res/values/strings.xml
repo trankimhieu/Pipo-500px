@@ -39,4 +39,12 @@
     <string name="error_login_content" type="id">Wrong email or password, please check it again</string>
     <string name="dialog_button_ok" type="id">OK</string>
     <string name="content_des_vote_button">Vote button</string>
+    <string name="error_message_empty">Empty string</string>
+    <string name="error_message_digit">Empty string</string>
+    <string name="submit">Hold me and pull to upload</string>
+    <string name="action_search">Search</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="hint_name">Name</string>
+    <string name="hint_desc">Description</string>
 </resources>

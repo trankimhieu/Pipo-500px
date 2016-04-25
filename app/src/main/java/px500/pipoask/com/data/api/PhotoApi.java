@@ -1,11 +1,15 @@
 package px500.pipoask.com.data.api;
 
+import java.io.File;
+
 import px500.pipoask.com.data.model.Photo;
 import px500.pipoask.com.data.model.PhotoDetail;
 import px500.pipoask.com.data.model.PhotoList;
-import px500.pipoask.com.data.model.VoteList;
+import px500.pipoask.com.data.model.Upload;
 import retrofit2.http.DELETE;
+import retrofit2.http.Field;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -22,12 +26,16 @@ public interface PhotoApi {
     @GET("/v1/photos/search")
     Observable<PhotoList> search(@Query("term") String keyword);
 
-    @GET("/v1/photos/{id}/votes")
-    Observable<VoteList> getVoteList(@Path("id") String id);
+    @POST("/v1/photos")
+    Observable<Upload> postPhoto(@Query("name") String name, @Query("description") String description, @Query("category") int category);
 
     @POST("/v1/photos/{id}/vote")
     Observable<Photo> postVote(@Path("id") Integer id, @Query("vote") int vote);
 
     @DELETE("/v1/photos/{id}/vote")
     Observable<Photo> deleteVote(@Path("id") Integer id);
+
+    @Multipart
+    @POST("v1/upload")
+    Observable<Photo> uploadPhoto(@Field("file") File file, @Field("photo_id") int photoId);
 }

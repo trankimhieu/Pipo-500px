@@ -23,6 +23,5 @@ public interface ActivityComponent {
     void inject(MainActivity mainActivity);
     void inject(PhotoActivity photoActivity);
     void inject(SearchActivity searchActivity);
-
     void inject(LoginActivity loginActivity);
 }

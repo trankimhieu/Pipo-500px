@@ -1,6 +1,8 @@
 package px500.pipoask.com.module.main;
 
+import android.Manifest;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -18,6 +20,12 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.github.clans.fab.FloatingActionButton;
+import com.jakewharton.rxbinding.view.RxView;
+import com.mlsdev.rximagepicker.RxImagePicker;
+import com.mlsdev.rximagepicker.Sources;
+import com.tbruyelle.rxpermissions.RxPermissions;
+
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
@@ -27,20 +35,24 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import px500.pipoask.com.NavigationManager;
 import px500.pipoask.com.R;
 import px500.pipoask.com.adapter.PhotoAdapter;
 import px500.pipoask.com.adapter.holder.MainHolder;
 import px500.pipoask.com.data.api.Feature;
+import px500.pipoask.com.data.local.ConstKV;
 import px500.pipoask.com.data.model.Photo;
 import px500.pipoask.com.data.model.PhotoList;
 import px500.pipoask.com.module.base.BaseActivity;
 import px500.pipoask.com.module.photo.PhotoActivity;
 import px500.pipoask.com.module.search.SearchActivity;
+import px500.pipoask.com.module.upload.UploadActivity;
 import px500.pipoask.com.utiity.EndlessRecyclerOnScrollListener;
 
 public class MainActivity extends BaseActivity implements IMainView,
-        NavigationView.OnNavigationItemSelectedListener, MainHolder.ClickListener{
+        NavigationView.OnNavigationItemSelectedListener, MainHolder.ClickListener {
 
+    private static final String TAG = "MainActivity";
     @Bind(R.id.toolbar)
     Toolbar toolbar;
 
@@ -65,6 +77,12 @@ public class MainActivity extends BaseActivity implements IMainView,
     @Bind(R.id.loadMoreView)
     TextView loadMoreView;
 
+    @Bind(R.id.fab_camera)
+    FloatingActionButton floatingActionButtonCamera;
+
+    @Bind(R.id.fab_upload)
+    FloatingActionButton floatingActionButtonUpload;
+
     @Inject
     MainPresenter mainPresenter;
     EndlessRecyclerOnScrollListener endlessRecyclerOnScrollListener;
@@ -73,6 +91,7 @@ public class MainActivity extends BaseActivity implements IMainView,
     private PhotoAdapter photoAdapter;
     private int currentPage = 1;
     private String feature = Feature.Type.POPULAR;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -87,6 +106,25 @@ public class MainActivity extends BaseActivity implements IMainView,
         initUI();
 
         mainPresenter.getPhotos(currentPage, feature, false);
+
+        RxView.clicks(floatingActionButtonCamera)
+                .compose(RxPermissions.getInstance(this).ensure(Manifest.permission.CAMERA))
+                .subscribe(granted -> {
+                    RxImagePicker.with(this).requestImage(Sources.CAMERA).subscribe(this::openUploadWithUri);
+                });
+
+        RxView.clicks(floatingActionButtonUpload)
+                .compose(RxPermissions.getInstance(this).ensure(Manifest.permission.MANAGE_DOCUMENTS))
+                .subscribe(granted -> {
+                    RxImagePicker.with(this).requestImage(Sources.GALLERY).subscribe(this::openUploadWithUri);
+                });
+
+    }
+
+    void openUploadWithUri(Uri uri) {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(ConstKV.BUNDLE_IMAGE_URI, uri);
+        new NavigationManager<UploadActivity>().openActivity(this, UploadActivity.class, ConstKV.BUNDLE_IMAGE_URI, bundle);
     }
 
 
@@ -131,7 +169,7 @@ public class MainActivity extends BaseActivity implements IMainView,
         if (item.getItemId() == R.id.action_search) {
             Intent intent = new Intent(MainActivity.this, SearchActivity.class);
             startActivity(intent);
-            overridePendingTransition( R.anim.slide_in_up, 0 );
+            overridePendingTransition(R.anim.slide_in_up, 0);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -195,7 +233,7 @@ public class MainActivity extends BaseActivity implements IMainView,
     @Override
     public void hideLoadingData() {
         llLoading.setVisibility(View.GONE);
-        loadMoreView.setVisibility(View.GONE);
+        loadMoreView.setVisibility(View.INVISIBLE);
     }
 
     @Override

@@ -1,7 +1,6 @@
 package px500.pipoask.com.module.photo;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
@@ -22,9 +21,11 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import px500.pipoask.com.NavigationManager;
 import px500.pipoask.com.R;
 import px500.pipoask.com.data.model.Photo;
 import px500.pipoask.com.module.base.BaseActivity;
+import px500.pipoask.com.module.chat.ChatActivity;
 import px500.pipoask.com.utiity.LogUtils;
 import px500.pipoask.com.utiity.StringUtils;
 import uk.co.senab.photoview.PhotoView;
@@ -85,8 +86,7 @@ public class PhotoActivity extends BaseActivity implements IPhotoView {
 
         copyright.setOnClickListener(v -> {
             try {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://500px.com" + photo.url));
-                startActivity(browserIntent);
+                new NavigationManager<ChatActivity>().openActivity(this, ChatActivity.class);
             } catch (Exception exp) {
                 LogUtils.error(TAG, exp.getMessage());
             }

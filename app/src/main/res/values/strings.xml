@@ -47,4 +47,5 @@
 
     <string name="hint_name">Name</string>
     <string name="hint_desc">Description</string>
+    <string name="let_talk_about_it">Let talk about it</string>
 </resources>

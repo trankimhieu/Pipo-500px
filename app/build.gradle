@@ -33,8 +33,16 @@ android {
         }
     }
 
+    packagingOptions {
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE-FIREBASE.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/services/javax.annotation.processing.Processor'
+    }
+
     lintOptions {
         abortOnError false
+        disable 'InvalidPackage'
     }
 
     compileOptions {
@@ -83,6 +91,9 @@ dependencies {
     compile 'com.github.clans:fab:1.6.3'
 
     compile 'com.koushikdutta.ion:ion:2.1.7'
+
+    compile 'com.firebase:firebase-client-android:2.5.2'
+    compile 'me.himanshusoni.chatmessageview:chat-message-view:1.0.3'
 
     compile 'com.race604.flyrefresh:library:2.0.0'
     compile 'com.emmasuzuki:easyform:1.0.0'

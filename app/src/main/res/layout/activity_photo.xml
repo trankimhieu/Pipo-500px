@@ -22,7 +22,7 @@
             android:layout_margin="10dp"
             android:background="@drawable/bg_btn_copyright"
             android:gravity="center"
-            android:text="@string/copy_right"
+            android:text="@string/let_talk_about_it"
             android:textAllCaps="false"
             android:textColor="@android:color/white" />
 

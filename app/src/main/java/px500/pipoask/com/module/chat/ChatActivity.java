@@ -18,6 +18,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import px500.pipoask.com.R;
 import px500.pipoask.com.adapter.ChatViewAdapter;
+import px500.pipoask.com.data.local.ConstKV;
 import px500.pipoask.com.data.model.chat.ChatItem;
 import px500.pipoask.com.helpers.ChatHelper;
 import px500.pipoask.com.helpers.ChatListHelper;
@@ -30,6 +31,8 @@ public class ChatActivity extends AppCompatActivity {
     EditText editTextChatInput;
     @Bind(R.id.listViewChatContent)
     ListView listViewChatContent;
+
+    int photoId = 0;
 
     List<ChatItem> chatItemList;
     ChatViewAdapter adapter;
@@ -48,7 +51,7 @@ public class ChatActivity extends AppCompatActivity {
             chatItemList.add(item);
             adapter.notifyDataSetChanged();
             listViewChatContent.smoothScrollToPosition(adapter.getCount() - 1);
-            String id = FirebaseHelper.getInstance().saveChatItem(item);
+            String id = FirebaseHelper.getInstance().saveChatItem(item, photoId);
             item.setId(id);
             editTextChatInput.setText("");
             return true;
@@ -64,11 +67,14 @@ public class ChatActivity extends AppCompatActivity {
         username = ChatHelper.getInstance(ChatActivity.this).getChatUsername();
         adapter = new ChatViewAdapter(ChatActivity.this, 0, chatItemList);
         listViewChatContent.setAdapter(adapter);
+
+        photoId = getIntent().getBundleExtra(ConstKV.BUNDLE_PHOTO_ID).getInt(ConstKV.PHOTO_ID, 0);
+
         editTextChatInput.setImeActionLabel("Send", KeyEvent.KEYCODE_ENTER);
         editTextChatInput.setOnEditorActionListener(onEditorActionListener);
 
         //TODO: Will move it to presenter to have best design and remove logic code inside activity
-        FirebaseHelper.getInstance().getChatFirebaseClient().addChildEventListener(new ChildEventListener() {
+        FirebaseHelper.getInstance().getChatFirebaseClient(photoId).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 ChatItem tempItem = new ChatItem(dataSnapshot);

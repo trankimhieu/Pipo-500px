@@ -33,8 +33,19 @@ public class FirebaseHelper {
         return newChatItem.getKey();
     }
 
+    public String saveChatItem(ChatItem chatItem, int photoId) {
+        Firebase chatCollectionRef = firebaseClient.child(CHAT_COLLECTION).child(String.valueOf(photoId));
+        Firebase newChatItem = chatCollectionRef.push();
+        newChatItem.setValue(chatItem);
+        return newChatItem.getKey();
+    }
+
     public Firebase getChatFirebaseClient() {
         return firebaseClient.child(CHAT_COLLECTION);
+    }
+
+    public Firebase getChatFirebaseClient(int photoId) {
+        return firebaseClient.child(CHAT_COLLECTION).child(String.valueOf(photoId));
     }
 
     public void updateChatItemStatus(ChatItem item) {

@@ -23,6 +23,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import px500.pipoask.com.NavigationManager;
 import px500.pipoask.com.R;
+import px500.pipoask.com.data.local.ConstKV;
 import px500.pipoask.com.data.model.Photo;
 import px500.pipoask.com.module.base.BaseActivity;
 import px500.pipoask.com.module.chat.ChatActivity;
@@ -86,7 +87,9 @@ public class PhotoActivity extends BaseActivity implements IPhotoView {
 
         copyright.setOnClickListener(v -> {
             try {
-                new NavigationManager<ChatActivity>().openActivity(this, ChatActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt(ConstKV.PHOTO_ID, photo.id);
+                new NavigationManager<ChatActivity>().openActivity(this, ChatActivity.class, ConstKV.BUNDLE_PHOTO_ID, bundle);
             } catch (Exception exp) {
                 LogUtils.error(TAG, exp.getMessage());
             }

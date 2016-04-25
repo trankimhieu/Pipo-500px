@@ -16,7 +16,7 @@ import px500.pipoask.com.NavigationManager;
 import px500.pipoask.com.data.api.PhotoApi;
 import px500.pipoask.com.data.local.ConstKV;
 import px500.pipoask.com.data.local.SharedPreferenceHelper;
-import px500.pipoask.com.data.model.User;
+import px500.pipoask.com.data.model.ShowUser;
 import px500.pipoask.com.module.base.BasePresenter;
 import px500.pipoask.com.module.main.MainActivity;
 import px500.pipoask.com.utiity.LogUtils;
@@ -56,11 +56,10 @@ public class LoginPresenter extends BasePresenter<ILoginView> implements XAuth50
 
     @Override
     public void onSuccess(AccessToken accessToken) {
-        getMvpView().hideLoadingData();
         LogUtils.debug(TAG, accessToken.getToken());
         SharedPreferenceHelper.setSharedPreferenceString(ConstKV.USER_500PX_TOKEN, accessToken.getToken());
         SharedPreferenceHelper.setSharedPreferenceString(ConstKV.USER_500PX_TOKEN_SECRET, accessToken.getTokenSecret());
-        photoApi.getUser(email).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Subscriber<User>() {
+        photoApi.getUser(email).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Subscriber<ShowUser>() {
             @Override
             public void onCompleted() {
                 new NavigationManager<MainActivity>().openActivity((Context) getMvpView(), MainActivity.class);
@@ -68,14 +67,15 @@ public class LoginPresenter extends BasePresenter<ILoginView> implements XAuth50
 
             @Override
             public void onError(Throwable e) {
-                LogUtils.error(TAG, e.getMessage());
+                getMvpView().hideLoadingData();
             }
 
             @Override
-            public void onNext(User user) {
+            public void onNext(ShowUser showUser) {
                 Gson gson = new Gson();
-                String userJSON = gson.toJson(user);
+                String userJSON = gson.toJson(showUser.user);
                 SharedPreferenceHelper.setSharedPreferenceString(ConstKV.USER_500PX_INFO, userJSON);
+                getMvpView().hideLoadingData();
             }
         });
 

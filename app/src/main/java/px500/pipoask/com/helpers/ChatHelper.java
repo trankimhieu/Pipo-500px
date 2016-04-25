@@ -4,6 +4,11 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.provider.Settings;
 
+import com.google.gson.Gson;
+
+import px500.pipoask.com.data.local.ConstKV;
+import px500.pipoask.com.data.local.SharedPreferenceHelper;
+import px500.pipoask.com.data.model.User;
 import px500.pipoask.com.data.model.chat.ChatItem;
 
 public class ChatHelper {
@@ -34,14 +39,24 @@ public class ChatHelper {
     }
 
     public String getChatUsername() {
-        String username = getCreatedUsername();
-        if (username.equals("")) {
-            String deviceId = ChatHelper.getDeviceId(context);
-            String substr = deviceId.substring(deviceId.length() - 4);
-            username = "USER_" + substr;
+        String userJson = SharedPreferenceHelper.getSharedPreferenceString(ConstKV.USER_500PX_INFO, "");
+
+        if (!userJson.isEmpty()) {
+            Gson gson = new Gson();
+            User user = gson.fromJson(userJson, User.class);
+            username = user.username;
             saveCreatedUsername(username);
+            return user.username;
+        } else {
+            String username = getCreatedUsername();
+            if (username.equals("")) {
+                String deviceId = ChatHelper.getDeviceId(context);
+                String substr = deviceId.substring(deviceId.length() - 4);
+                username = "USER_" + substr;
+                saveCreatedUsername(username);
+            }
+            return username;
         }
-        return username;
     }
 
     public boolean isFromThisUser(ChatItem item) {

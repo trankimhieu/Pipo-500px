@@ -3,6 +3,7 @@ package px500.pipoask.com;
 import android.app.Application;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.firebase.client.Firebase;
 
 import px500.pipoask.com.data.local.ConstKV;
 import px500.pipoask.com.data.local.SharedPreferenceHelper;
@@ -10,6 +11,7 @@ import px500.pipoask.com.data.model.Category;
 import px500.pipoask.com.di.component.ApplicationComponent;
 import px500.pipoask.com.di.component.DaggerApplicationComponent;
 import px500.pipoask.com.di.module.ApplicationModule;
+import px500.pipoask.com.helpers.FirebaseHelper;
 
 public class GroovyApplication extends Application {
 
@@ -20,6 +22,12 @@ public class GroovyApplication extends Application {
         super.onCreate();
         initAppComponent();
         SharedPreferenceHelper.getInstance(getApplicationContext());
+
+        ChatConfig.getInstance();
+        Firebase.setAndroidContext(getApplicationContext());
+        FirebaseHelper.getInstance();
+
+
         Fresco.initialize(getApplicationContext());
 
         ConstKV.CATEGORY_LIST.add(new Category(0, "Uncategorized"));

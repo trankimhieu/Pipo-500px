@@ -68,13 +68,18 @@ public class PhotoAdapter extends RecyclerView.Adapter<MainHolder> {
     public void onBindViewHolder(MainHolder viewHolder, int position) {
         PhotoHolder photoHolder = (PhotoHolder) viewHolder;
         Photo photo = photoList.get(position);
-        if (photo.voted) {
-            photoHolder.imageButtonVote.setBackground(ContextCompat.getDrawable(mActivity, R.drawable.icon_vote1));
+        if (photo.voted != null) {
+            if (photo.voted) {
+                photoHolder.imageButtonVote.setBackground(ContextCompat.getDrawable(mActivity, R.drawable.icon_vote1));
 
+            } else {
+                photoHolder.imageButtonVote.setBackground(ContextCompat.getDrawable(mActivity, R.drawable.icon_vote0));
+
+            }
         } else {
             photoHolder.imageButtonVote.setBackground(ContextCompat.getDrawable(mActivity, R.drawable.icon_vote0));
-
         }
+
         photoHolder.imageButtonVote.setTag(photo);
         Uri uri = Uri.parse(photo.imageUrl);
         photoHolder.photo.setImageURI(uri);

@@ -22,6 +22,12 @@
             sothree:theme="@style/ActionBar" />
 
         <LinearLayout
+            android:layout_width="0px"
+            android:layout_height="0px"
+            android:focusable="true"
+            android:focusableInTouchMode="true" />
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@android:color/black"
@@ -98,6 +104,8 @@
                 android:layout_alignParentStart="true"
                 android:hint="Be nice, be smart"
                 android:inputType="text"
+                android:nextFocusLeft="@id/editTextChatInput"
+                android:nextFocusUp="@id/editTextChatInput"
                 android:singleLine="true" />
 
             <ListView
@@ -110,6 +118,5 @@
                 android:layout_alignParentTop="true"
                 android:divider="@null" />
         </RelativeLayout>
-
     </LinearLayout>
 </com.sothree.slidinguppanel.SlidingUpPanelLayout>

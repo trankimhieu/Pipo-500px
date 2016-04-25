@@ -1,5 +1,6 @@
 package px500.pipoask.com.module.photo;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -10,6 +11,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -97,6 +99,8 @@ public class PhotoActivity extends BaseActivity implements IPhotoView {
             String id = FirebaseHelper.getInstance().saveChatItem(item, photoId);
             item.setId(id);
             editTextChatInput.setText("");
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(editTextChatInput.getWindowToken(), 0);
             return true;
         }
     };
@@ -299,7 +303,6 @@ public class PhotoActivity extends BaseActivity implements IPhotoView {
         Glide.with(this)
                 .load(photo.imageUrl)
                 .into(photoView);
-
     }
 
     @Override

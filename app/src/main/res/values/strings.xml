@@ -48,4 +48,12 @@
     <string name="hint_name">Name</string>
     <string name="hint_desc">Description</string>
     <string name="let_talk_about_it">Let talk about it</string>
+
+    <string name="action_hide">Hide Panel</string>
+    <string name="action_show">Show Panel</string>
+
+    <string name="action_anchor_enable">Enable Anchor Point</string>
+    <string name="action_anchor_disable">Disable Anchor Point</string>
+    <string name="swipe_up_bar_text"><![CDATA[<b>Let say WOW with your friends</b><br/> Brought to you by <a href="http://kimhieu.me">Hieu Tran</a><br/><i>Swipe up to begin talking with awesome peoples</i>]]></string>
+    <string name="swipe_down_bar_text"><![CDATA[<b>Let say WOW with your friends</b><br/> Brought to you by <a href="http://kimhieu.me">Hieu Tran</a><br/><i>Swipe down to see incredible photo</i>]]></string>
 </resources>

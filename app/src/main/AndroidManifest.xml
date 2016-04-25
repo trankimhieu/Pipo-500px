@@ -26,7 +26,7 @@
             android:theme="@style/FullScreenTheme" />
         <activity
             android:name=".module.photo.PhotoActivity"
-            android:theme="@style/FullScreenTheme" />
+            android:theme="@style/AppTheme.ActionBarOverlay" />
         <activity
             android:name=".module.search.SearchActivity"
             android:theme="@style/FullScreenTheme" />

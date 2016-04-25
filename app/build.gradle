@@ -79,6 +79,8 @@ dependencies {
     compile 'io.reactivex:rxjava:1.0.10'
     compile 'io.reactivex:rxandroid:0.24.0'
 
+    compile 'com.sothree.slidinguppanel:library:3.3.0'
+
     compile 'com.mlsdev.rximagepicker:library:1.1.2'
 
     compile 'com.tbruyelle.rxpermissions:rxpermissions:0.7.0@aar'

@@ -6,30 +6,39 @@ import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.firebase.client.ChildEventListener;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.FirebaseError;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import org.parceler.Parcels;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import px500.pipoask.com.NavigationManager;
 import px500.pipoask.com.R;
-import px500.pipoask.com.data.local.ConstKV;
+import px500.pipoask.com.adapter.ChatViewAdapter;
 import px500.pipoask.com.data.model.Photo;
+import px500.pipoask.com.data.model.chat.ChatItem;
+import px500.pipoask.com.helpers.ChatHelper;
+import px500.pipoask.com.helpers.ChatListHelper;
+import px500.pipoask.com.helpers.FirebaseHelper;
 import px500.pipoask.com.module.base.BaseActivity;
-import px500.pipoask.com.module.chat.ChatActivity;
-import px500.pipoask.com.utiity.LogUtils;
 import px500.pipoask.com.utiity.StringUtils;
 import uk.co.senab.photoview.PhotoView;
 
@@ -44,8 +53,6 @@ public class PhotoActivity extends BaseActivity implements IPhotoView {
     @Bind(R.id.my_image_view)
     PhotoView photoView;
 
-    @Bind(R.id.copyright)
-    Button copyright;
 
     @Bind(R.id.status)
     TextView status;
@@ -65,6 +72,34 @@ public class PhotoActivity extends BaseActivity implements IPhotoView {
 
     @Inject
     PhotoPresenter photoPresenter;
+    @Bind(R.id.editTextChatInput)
+    EditText editTextChatInput;
+    @Bind(R.id.listViewChatContent)
+    ListView listViewChatContent;
+    int photoId = 0;
+    List<ChatItem> chatItemList;
+    ChatViewAdapter adapter;
+    String username;
+    TextView.OnEditorActionListener onEditorActionListener = new TextView.OnEditorActionListener() {
+        @Override
+        public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+
+            String content = v.getText().toString();
+
+            if (content.equals("")) {
+                return false;
+            }
+            ChatItem item = new ChatItem(username, content);
+            item.setStatus(ChatHelper.CHAT_STATUS_SENDING);
+            chatItemList.add(item);
+            adapter.notifyDataSetChanged();
+            listViewChatContent.smoothScrollToPosition(adapter.getCount() - 1);
+            String id = FirebaseHelper.getInstance().saveChatItem(item, photoId);
+            item.setId(id);
+            editTextChatInput.setText("");
+            return true;
+        }
+    };
     private Photo photo;
 
     @Override
@@ -103,14 +138,75 @@ public class PhotoActivity extends BaseActivity implements IPhotoView {
                 }
             }
         });
-        mLayout.setFadeOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
-            }
-        });
+        mLayout.setFadeOnClickListener(view -> mLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED));
 
         textViewSlideUpBar.setText(Html.fromHtml(getString(R.string.swipe_up_bar_text)));
+
+
+        chatItemList = new ArrayList<>();
+        username = ChatHelper.getInstance(PhotoActivity.this).getChatUsername();
+        adapter = new ChatViewAdapter(PhotoActivity.this, 0, chatItemList);
+        listViewChatContent.setAdapter(adapter);
+
+        photoId = photo.id;
+
+        editTextChatInput.setImeActionLabel("Send", KeyEvent.KEYCODE_ENTER);
+        editTextChatInput.setOnEditorActionListener(onEditorActionListener);
+
+        //TODO: Will move it to presenter to have best design and remove logic code inside activity
+        FirebaseHelper.getInstance().getChatFirebaseClient(photoId).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                ChatItem tempItem = new ChatItem(dataSnapshot);
+
+                if (ChatHelper.getInstance(PhotoActivity.this).isFromThisUser(tempItem)) {
+                    if (tempItem.getStatus().equals(ChatHelper.CHAT_STATUS_SENDING)) {
+                        tempItem.setStatus(ChatHelper.CHAT_STATUS_DELIVERED);
+                        FirebaseHelper.getInstance().updateChatItemStatus(tempItem, photoId);
+                    }
+                } else {
+                    tempItem.setStatus(ChatHelper.CHAT_STATUS_RECEIVED);
+                    FirebaseHelper.getInstance().updateChatItemStatus(tempItem, photoId);
+                }
+
+                ChatItem item = ChatListHelper.findItem(chatItemList, tempItem);
+                if (item == null) {
+                    chatItemList.add(tempItem);
+                }
+                adapter.notifyDataSetChanged();
+                listViewChatContent.smoothScrollToPosition(adapter.getCount() - 1);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                ChatItem tempItem = new ChatItem(dataSnapshot);
+                ChatItem item = ChatListHelper.findItem(chatItemList, tempItem);
+                if (item == null) {
+                    chatItemList.add(tempItem);
+
+                } else {
+                    item.setStatus(tempItem.getStatus());
+                    item.setUsername(tempItem.getUsername());
+                    item.setMessage(tempItem.getMessage());
+                }
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
     }
 
     @Override
@@ -179,18 +275,7 @@ public class PhotoActivity extends BaseActivity implements IPhotoView {
     private void initUI() {
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
-
         toolbar.setNavigationOnClickListener(v -> finish());
-
-        copyright.setOnClickListener(v -> {
-            try {
-                Bundle bundle = new Bundle();
-                bundle.putInt(ConstKV.PHOTO_ID, photo.id);
-                new NavigationManager<ChatActivity>().openActivity(this, ChatActivity.class, ConstKV.BUNDLE_PHOTO_ID, bundle);
-            } catch (Exception exp) {
-                LogUtils.error(TAG, exp.getMessage());
-            }
-        });
     }
 
     @Override

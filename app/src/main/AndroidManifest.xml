@@ -26,7 +26,8 @@
             android:theme="@style/FullScreenTheme" />
         <activity
             android:name=".module.photo.PhotoActivity"
-            android:theme="@style/FullScreenTheme" />
+            android:theme="@style/AppTheme.ActionBarOverlay"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".module.search.SearchActivity"
             android:theme="@style/FullScreenTheme" />
@@ -39,7 +40,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".module.upload.UploadActivity" android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".module.upload.UploadActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

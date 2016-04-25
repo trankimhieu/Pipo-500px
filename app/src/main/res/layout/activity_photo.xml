@@ -1,47 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.sothree.slidinguppanel.SlidingUpPanelLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:sothree="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/sliding_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/black"
-    android:gravity="center"
-    android:orientation="vertical">
+    android:gravity="bottom"
+    sothree:umanoPanelHeight="68dp"
+    sothree:umanoShadowHeight="4dp">
 
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/layout_toolbar" />
-
-    <RelativeLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <Button
-            android:id="@+id/copyright"
+        <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:sothree="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/main_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_alignParentBottom="true"
-            android:layout_margin="10dp"
-            android:background="@drawable/bg_btn_copyright"
-            android:gravity="center"
-            android:text="@string/copy_right"
-            android:textAllCaps="false"
-            android:textColor="@android:color/white" />
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            sothree:theme="@style/ActionBar" />
 
-        <FrameLayout
+        <LinearLayout
+            android:layout_width="0px"
+            android:layout_height="0px"
+            android:focusable="true"
+            android:focusableInTouchMode="true" />
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@id/copyright">
-
-            <uk.co.senab.photoview.PhotoView
-                android:id="@+id/my_image_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-            </uk.co.senab.photoview.PhotoView>
+            android:background="@android:color/black"
+            android:gravity="center"
+            android:orientation="vertical">
 
             <include
-                android:id="@+id/loading"
-                layout="@layout/layout_loading" />
+                android:id="@+id/toolbar"
+                layout="@layout/layout_toolbar" />
 
-        </FrameLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-    </RelativeLayout>
-</LinearLayout>
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <uk.co.senab.photoview.PhotoView
+                        android:id="@+id/my_image_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"></uk.co.senab.photoview.PhotoView>
+
+                    <include
+                        android:id="@+id/loading"
+                        layout="@layout/layout_loading" />
+
+                </FrameLayout>
+
+            </RelativeLayout>
+        </LinearLayout>
+    </FrameLayout>
+    <!-- SLIDING LAYOUT -->
+    <LinearLayout
+        android:id="@+id/dragView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ffffff"
+        android:clickable="true"
+        android:focusable="false"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="68dp"
+            android:background="@color/colorAccent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/slide_up_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:textColor="#ffffff"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            tools:context=".module.chat.ChatActivity">
+
+            <EditText
+                android:id="@+id/editTextChatInput"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentStart="true"
+                android:hint="Be nice, be smart"
+                android:inputType="text"
+                android:nextFocusLeft="@id/editTextChatInput"
+                android:nextFocusUp="@id/editTextChatInput"
+                android:singleLine="true" />
+
+            <ListView
+                android:id="@+id/listViewChatContent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/editTextChatInput"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:divider="@null" />
+        </RelativeLayout>
+    </LinearLayout>
+</com.sothree.slidinguppanel.SlidingUpPanelLayout>

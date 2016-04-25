@@ -5,6 +5,7 @@ import java.io.File;
 import px500.pipoask.com.data.model.Photo;
 import px500.pipoask.com.data.model.PhotoDetail;
 import px500.pipoask.com.data.model.PhotoList;
+import px500.pipoask.com.data.model.ShowUser;
 import px500.pipoask.com.data.model.Upload;
 import retrofit2.http.DELETE;
 import retrofit2.http.Field;
@@ -25,6 +26,9 @@ public interface PhotoApi {
 
     @GET("/v1/photos/search")
     Observable<PhotoList> search(@Query("term") String keyword);
+
+    @GET("/v1/users/show")
+    Observable<ShowUser> getUser(@Query("username") String username);
 
     @POST("/v1/photos")
     Observable<Upload> postPhoto(@Query("name") String name, @Query("description") String description, @Query("category") int category);

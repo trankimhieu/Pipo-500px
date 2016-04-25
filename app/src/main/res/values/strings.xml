@@ -1,3 +1,50 @@
 <resources>
     <string name="app_name">Pipo 500px</string>
+
+    <string name="empty_result">Empty result</string>
+    <string name="navigation_drawer_open">open</string>
+    <string name="navigation_drawer_close">close</string>
+
+    <string name="popular">POPULAR</string>
+    <string name="editors">EDITORS</string>
+    <string name="upcoming">UPCOMING</string>
+    <string name="fresh">FRESH</string>
+    <string name="search">Search</string>
+    <string name="share">Share</string>
+    <string name="loading">Loading…</string>
+    <string name="copy_right">Copyright</string>
+    <string name="search_photo">Search photo…</string>
+    <string name="desc_search_image">Search result</string>
+    <string name="title_activity_login">Sign in</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password (optional)</string>
+    <string name="action_sign_in">Sign in</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string name="login">Login…</string>
+    <string name="demo_username">trankimhieu</string>
+    <string name="demo_password">19001570</string>
+    <string name="logo_500px">500px Logo</string>
+
+
+    <string name="error_login_title" type="id">Login Error</string>
+    <string name="error_login_content" type="id">Wrong email or password, please check it again</string>
+    <string name="dialog_button_ok" type="id">OK</string>
+    <string name="content_des_vote_button">Vote button</string>
+    <string name="error_message_empty">Empty string</string>
+    <string name="error_message_digit">Empty string</string>
+    <string name="submit">Hold me and pull to upload</string>
+    <string name="action_search">Search</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="hint_name">Name</string>
+    <string name="hint_desc">Description</string>
 </resources>

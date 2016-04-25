@@ -1,4 +1,7 @@
+apply plugin: 'android-sdk-manager'
 apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'com.neenbedankt.android-apt'
 
 android {
     compileSdkVersion 23
@@ -6,16 +9,37 @@ android {
 
     defaultConfig {
         applicationId "px500.pipoask.com"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
     }
     buildTypes {
+
+        debug {
+            buildConfigField "String", "ENDPOINT", '"https://api.500px.com"'
+            buildConfigField "String", "ENDPOINT_UPLOAD", '"https://upload.500px.com"'
+            buildConfigField "String", "CONSUMER_KEY_SECRET", '"g1FIiNqo2Si8tEwNrqPJZMJFuF0xU7IwP7gqQ3ep"'
+            buildConfigField "String", "CONSUMER_KEY", '"6ChBZTzYgNc3DBlLWzlWhbyVBrSWdxrvuyXJBsGl"'
+        }
+
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "ENDPOINT", '"https://api.500px.com"'
+            buildConfigField "String", "ENDPOINT_UPLOAD", '"https://upload.500px.com"'
+            buildConfigField "String", "CONSUMER_KEY_SECRET", '"g1FIiNqo2Si8tEwNrqPJZMJFuF0xU7IwP7gqQ3ep"'
+            buildConfigField "String", "CONSUMER_KEY", '"6ChBZTzYgNc3DBlLWzlWhbyVBrSWdxrvuyXJBsGl"'
         }
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
@@ -23,4 +47,50 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.3.0'
+    compile 'com.android.support:design:23.3.0'
+
+
+    compile 'com.google.dagger:dagger:2.0'
+    provided 'com.google.dagger:dagger-compiler:2.0'
+    provided 'org.glassfish:javax.annotation:10.0-b28'
+    compile 'com.jakewharton:butterknife:7.0.1'
+
+    compile 'com.squareup.retrofit2:retrofit:2.0.2'
+    compile 'com.squareup.retrofit2:converter-gson:2.0.2'
+    compile 'com.squareup.retrofit2:adapter-rxjava:2.0.2'
+
+    compile 'com.facebook.fresco:fresco:0.10.0'
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+
+    compile 'oauth.signpost:oauth-signpost:1.2.1.2'
+    compile 'se.akerfeldt:okhttp-signpost:1.1.0'
+
+    compile 'org.parceler:parceler-api:1.1.1'
+    apt 'org.parceler:parceler:1.1.1'
+
+    compile 'io.reactivex:rxjava:1.0.10'
+    compile 'io.reactivex:rxandroid:0.24.0'
+
+    compile 'com.mlsdev.rximagepicker:library:1.1.2'
+
+    compile 'com.tbruyelle.rxpermissions:rxpermissions:0.7.0@aar'
+    compile 'com.jakewharton.rxbinding:rxbinding:0.4.0'
+    compile 'com.jakewharton.rxbinding:rxbinding-support-v4:0.4.0'
+    compile 'com.jakewharton.rxbinding:rxbinding-appcompat-v7:0.4.0'
+    compile 'com.jakewharton.rxbinding:rxbinding-design:0.4.0'
+    compile 'com.jakewharton.rxbinding:rxbinding-recyclerview-v7:0.4.0'
+
+    compile 'com.github.clans:fab:1.6.3'
+
+    compile 'com.koushikdutta.ion:ion:2.1.7'
+
+    compile 'com.race604.flyrefresh:library:2.0.0'
+    compile 'com.emmasuzuki:easyform:1.0.0'
+
+    compile 'com.commit451:PhotoView:1.2.4'
+    compile 'com.jakewharton.rxbinding:rxbinding:0.2.0'
+    compile 'com.github.500px:500px-android-sdk:-SNAPSHOT'
+    compile('com.github.afollestad.material-dialogs:core:0.8.5.8@aar') {
+        transitive = true
+    }
 }

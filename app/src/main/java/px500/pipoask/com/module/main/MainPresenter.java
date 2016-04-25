@@ -1,0 +1,87 @@
+package px500.pipoask.com.module.main;
+
+import android.app.Activity;
+
+import javax.inject.Inject;
+
+import px500.pipoask.com.GroovyApplication;
+import px500.pipoask.com.data.api.PhotoApi;
+import px500.pipoask.com.data.model.PhotoList;
+import px500.pipoask.com.module.base.BasePresenter;
+import px500.pipoask.com.utiity.LogUtils;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+
+//public class MainPresenter extends BasePresenter<IMainView> implements XAuth500pxTask.Delegate {
+public class MainPresenter extends BasePresenter<IMainView> {
+    private static final String TAG = "MainPresenter";
+
+    @Inject
+    PhotoApi photoApi;
+
+    public MainPresenter(Activity activity) {
+        ((GroovyApplication) activity.getApplication()).getAppComponent().inject(this);
+    }
+
+    @Override
+    public void attachView(IMainView iMainView) {
+        super.attachView(iMainView);
+    }
+
+    @Override
+    public void detachView() {
+        super.detachView();
+    }
+
+    public void getPhotos(int page, String feature, boolean isLoadMore) {
+        LogUtils.info(TAG, page + "");
+
+        if (isLoadMore) {
+            getMvpView().loadMore();
+        } else {
+            getMvpView().showLoadingData();
+        }
+        photoApi.getFeaturePhotos(page, feature)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<PhotoList>() {
+                    @Override
+                    public void onCompleted() {
+                        getMvpView().hideLoadingData();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        getMvpView().showError(e.getMessage());
+                    }
+
+                    @Override
+                    public void onNext(PhotoList photoList) {
+//                        Observable<Photo> photoObserver = Observable.from(photoList.photos);
+//                        photoObserver.forEach(photo -> photoApi.getVoteList(photo.id)
+//                                .subscribeOn(Schedulers.io())
+//                                .observeOn(AndroidSchedulers.mainThread())
+//                                .subscribe(new Subscriber<VoteList>() {
+//                                    @Override
+//                                    public void onCompleted() {
+//
+//                                    }
+//
+//                                    @Override
+//                                    public void onError(Throwable e) {
+//
+//                                    }
+//
+//                                    @Override
+//                                    public void onNext(VoteList voteList) {
+//                                        photo.voteList = voteList;
+//                                    }
+//                                }));
+
+                        getMvpView().showPhotoList(photoList);
+                    }
+                });
+    }
+
+}

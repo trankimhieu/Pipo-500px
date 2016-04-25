@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <px500.pipoask.com.widget.PhotoView
+        android:id="@+id/face_photo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_face_image"
+        android:padding="10dp" />
+
+    <px500.pipoask.com.widget.PhotoView
+        android:id="@+id/photo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <FrameLayout
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_gravity="end|bottom">
+
+        <ProgressBar
+            android:id="@+id/progress_bar_vote"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center"
+            android:visibility="gone" />
+
+        <ImageButton
+            android:id="@+id/image_button_vote"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:background="@drawable/icon_vote1"
+            android:contentDescription="@string/content_des_vote_button"
+            android:padding="20dp" />
+    </FrameLayout>
+
+
+</FrameLayout>

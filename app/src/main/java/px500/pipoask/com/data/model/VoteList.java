@@ -17,71 +17,15 @@ public class VoteList {
 
     @SerializedName("current_page")
     @Expose
-    private Integer currentPage;
+    public Integer currentPage;
     @SerializedName("total_pages")
     @Expose
-    private Integer totalPages;
+    public Integer totalPages;
     @SerializedName("total_items")
     @Expose
-    private Integer totalItems;
+    public Integer totalItems;
     @SerializedName("users")
     @Expose
-    private List<User> users = new ArrayList<User>();
-
-    /**
-     * @return The currentPage
-     */
-    public Integer getCurrentPage() {
-        return currentPage;
-    }
-
-    /**
-     * @param currentPage The current_page
-     */
-    public void setCurrentPage(Integer currentPage) {
-        this.currentPage = currentPage;
-    }
-
-    /**
-     * @return The totalPages
-     */
-    public Integer getTotalPages() {
-        return totalPages;
-    }
-
-    /**
-     * @param totalPages The total_pages
-     */
-    public void setTotalPages(Integer totalPages) {
-        this.totalPages = totalPages;
-    }
-
-    /**
-     * @return The totalItems
-     */
-    public Integer getTotalItems() {
-        return totalItems;
-    }
-
-    /**
-     * @param totalItems The total_items
-     */
-    public void setTotalItems(Integer totalItems) {
-        this.totalItems = totalItems;
-    }
-
-    /**
-     * @return The users
-     */
-    public List<User> getUsers() {
-        return users;
-    }
-
-    /**
-     * @param users The users
-     */
-    public void setUsers(List<User> users) {
-        this.users = users;
-    }
+    public List<User> users = new ArrayList<User>();
 
 }

@@ -57,10 +57,13 @@ public class GroovyApplication extends Application {
         appComponent = DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))
                 .build();
+
+
     }
 
     public ApplicationComponent getAppComponent() {
         return appComponent;
     }
+
 
 }

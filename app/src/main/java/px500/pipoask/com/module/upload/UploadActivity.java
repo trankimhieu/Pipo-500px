@@ -1,11 +1,14 @@
 package px500.pipoask.com.module.upload;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -17,16 +20,29 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.emmasuzuki.easyform.EasyTextInputLayout;
+import com.koushikdutta.ion.Ion;
 import com.race604.flyrefresh.FlyRefreshLayout;
 
+import java.io.File;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import oauth.signpost.basic.DefaultOAuthConsumer;
+import px500.pipoask.com.BuildConfig;
+import px500.pipoask.com.GroovyApplication;
 import px500.pipoask.com.R;
+import px500.pipoask.com.data.api.PhotoApi;
 import px500.pipoask.com.data.local.ConstKV;
+import px500.pipoask.com.data.local.SharedPreferenceHelper;
 import px500.pipoask.com.data.model.Category;
+import px500.pipoask.com.data.model.Upload;
 import px500.pipoask.com.utiity.LogUtils;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class UploadActivity extends AppCompatActivity {
 
@@ -52,13 +68,73 @@ public class UploadActivity extends AppCompatActivity {
 
     Uri mUri;
 
+    File file;
+
     LayoutInflater inflater;
+
+    @Inject
+    PhotoApi photoApi;
+
+    public static String getPath(final Context context, final Uri uri) {
+        final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
+        Log.i("URI", uri + "");
+        String result = uri + "";
+        // DocumentProvider
+        //  if (isKitKat && DocumentsContract.isDocumentUri(context, uri)) {
+        if (isKitKat && (result.contains("media.documents"))) {
+            String[] ary = result.split("/");
+            int length = ary.length;
+            String imgary = ary[length - 1];
+            final String[] dat = imgary.split("%3A");
+            final String docId = dat[1];
+            final String type = dat[0];
+            Uri contentUri = null;
+            if ("image".equals(type)) {
+                contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+            } else if ("video".equals(type)) {
+            } else if ("audio".equals(type)) {
+            }
+            final String selection = "_id=?";
+            final String[] selectionArgs = new String[]{
+                    dat[1]
+            };
+            return getDataColumn(context, contentUri, selection, selectionArgs);
+        } else if ("content".equalsIgnoreCase(uri.getScheme())) {
+            return getDataColumn(context, uri, null, null);
+        }
+        // File
+        else if ("file".equalsIgnoreCase(uri.getScheme())) {
+            return uri.getPath();
+        }
+        return null;
+    }
+
+    public static String getDataColumn(Context context, Uri uri, String selection, String[] selectionArgs) {
+        Cursor cursor = null;
+        final String column = "_data";
+        final String[] projection = {
+                column
+        };
+        try {
+            cursor = context.getContentResolver().query(uri, projection, selection, selectionArgs, null);
+            if (cursor != null && cursor.moveToFirst()) {
+                final int column_index = cursor.getColumnIndexOrThrow(column);
+                return cursor.getString(column_index);
+            }
+        } finally {
+            if (cursor != null)
+                cursor.close();
+        }
+        return null;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload);
         ButterKnife.bind(this);
+        ((GroovyApplication) this.getApplication()).getAppComponent().inject(this);
+        ((GroovyApplication) this.getApplication()).getAppComponent().inject(this);
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -75,6 +151,7 @@ public class UploadActivity extends AppCompatActivity {
             if (mUri != null) {
                 imageViewPhoto.setImageURI(mUri);
                 LogUtils.debug(TAG, mUri.toString());
+                file = new File(getPath(UploadActivity.this, mUri));
             }
         }
 
@@ -86,7 +163,45 @@ public class UploadActivity extends AppCompatActivity {
             @Override
             public void onRefresh(FlyRefreshLayout view) {
                 LogUtils.debug(TAG, "Refresh");
-                new Handler().postDelayed(() -> flyLayout.onRefreshFinish(), 2000);
+                String name = inputName.getEditText().getText().toString();
+                String desc = inputDesc.getEditText().getText().toString();
+                Category cat = (Category) spinnerCategory.getSelectedView().getTag();
+
+                photoApi.postPhoto(name, desc, cat.id).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Subscriber<Upload>() {
+                    @Override
+                    public void onCompleted() {
+                        flyLayout.onRefreshFinish();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(Upload upload) {
+                        LogUtils.debug(TAG, upload.uploadKey);
+
+                        String token = SharedPreferenceHelper.getSharedPreferenceString(ConstKV.USER_500PX_TOKEN, null);
+                        String token_secret = SharedPreferenceHelper.getSharedPreferenceString(ConstKV.USER_500PX_TOKEN_SECRET, null);
+                        DefaultOAuthConsumer consumer = new DefaultOAuthConsumer(BuildConfig.CONSUMER_KEY, BuildConfig.CONSUMER_KEY_SECRET);
+                        consumer.setTokenWithSecret(token, token_secret);
+
+                        Ion.with(UploadActivity.this)
+                                .load("http://upload.500px.com/v1/upload")
+                                .addQuery("photo_id", String.valueOf(upload.photo.id))
+                                .addQuery("upload_key", upload.uploadKey)
+                                .addQuery("consumer_key", BuildConfig.CONSUMER_KEY)
+                                .setMultipartFile("file", "image", file)
+                                .asJsonObject()
+                                .setCallback((e, result) -> {
+                                    if (e != null)
+                                        LogUtils.error(TAG, e.getMessage());
+                                    if (result != null)
+                                        LogUtils.debug(TAG, result.toString());
+                                });
+                    }
+                });
             }
 
             @Override
